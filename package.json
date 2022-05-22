@@ -1,0 +1,20 @@
+{
+  "name": "noticias-lorenzianas",
+  "version": "1.0.0",
+  "description": "Proyecto de práctica.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "npm start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LorenzoRD2003/noticias-lorenzianas.git"
+  },
+  "author": "LorenzoRD2003",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LorenzoRD2003/noticias-lorenzianas/issues"
+  },
+  "homepage": "https://github.com/LorenzoRD2003/noticias-lorenzianas#readme"
+}
