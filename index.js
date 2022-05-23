@@ -9,4 +9,8 @@ app.listen(PORT, () => console.log(`Corriendo en el puerto ${PORT}`));
 const newsRouter = require("./routes/newsRoutes");
 app.use("/news", newsRouter);
 
+// Router for the authors
+const authorRouter = require("./routes/authorRoutes");
+app.use("/author", authorRouter);
+
 

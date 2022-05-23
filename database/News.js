@@ -4,7 +4,7 @@ const { v4: uuid } = require("uuid");
 const newsSchema = new mongoose.Schema({
     id: {
         type: Number,
-        default: uuid
+        default: () => uuid()
     },
     headline: {
         type: String,
@@ -21,7 +21,7 @@ const newsSchema = new mongoose.Schema({
     lead: String,
     date: {
         type: Date,
-        default: Date.now
+        default: () => (new Date).toLocaleDateString()
     },
     views: {
         type: Number,
