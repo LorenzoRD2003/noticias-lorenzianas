@@ -1,9 +1,9 @@
-const mongoose = require("mongoose");
+const { Schema, model } = require("mongoose");
 const { v4: uuid } = require("uuid");
 
-const newsSchema = new mongoose.Schema({
-    id: {
-        type: Number,
+const newsSchema = new Schema({
+    _id: {
+        type: String,
         default: () => uuid()
     },
     headline: {
@@ -11,7 +11,7 @@ const newsSchema = new mongoose.Schema({
         required: true
     },
     author: {
-        type: String,
+        type: Number,
         required: true
     },
     body: {
@@ -21,14 +21,18 @@ const newsSchema = new mongoose.Schema({
     lead: String,
     date: {
         type: Date,
-        default: () => (new Date).toLocaleDateString()
+        default: () => (new Date).toLocaleString()
     },
     views: {
         type: Number,
         min: 0,
         default: 0,
-    }
+    },
+    category: String,
+    tags: [String],
+}, {
+    timestamps: true
 });
 
-module.exports = mongoose.model("News", newsSchema);
+module.exports = model("News", newsSchema, "news");
 

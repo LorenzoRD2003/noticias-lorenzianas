@@ -1,23 +1,41 @@
-const mongoose = require("mongoose");
+const { Schema, model } = require("mongoose");
 const { v4: uuid } = require("uuid");
+const { createHash } = require("crypto");
+const bcrypt = require("bcrypt");
 
-const authorSchema = mongoose.Schema({
-    id: {
-        type: Number,
+const authorSchema = new Schema({
+    _id: {
+        type: String,
         default: () => uuid()
     },
-    fullName: {
-        name: String,
-        surname: String,
+    email: {
+        type: String,
         required: true
     },
-    age: {
-        type: Number,
-        min: 18
+    username: {
+        type: String,
+        required: true
     },
-    description: String,
-
+    password: {
+        type: String,
+        required: true
+    },
+    description: {
+        type: String,
+        default: ""
+    }
+}, {
+    timestamps: true
 });
 
-module.exports = mongoose.model("Author", authorSchema);
+authorSchema.methods.encryptPassword = async password => {
+    const salt = await bcrypt.genSalt(10);
+    return await bcrypt.hash(password, salt);
+};
+
+authorSchema.methods.matchPassword = async function(password) {
+    return await bcrypt.compare(password, this.password);
+}
+
+module.exports = model("Author", authorSchema, "authors");
 

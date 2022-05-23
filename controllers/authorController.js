@@ -1,34 +1,51 @@
 const authorService = require("../services/authorService");
 
-const getAllAuthors = (req, res) => {
-    const allAuthors = authorService.getAllAuthors();
-    res.send("Get all authors.");
+const getAllAuthors = async (req, res) => {
+    const allAuthors = await authorService.getAllAuthors();
+    res.status(200).send({ status: "OK", data: allAuthors });
 }
 
-const getAuthor = (req, res) => {
-    const author = authorService.getAuthor();
-    res.send("Get an existing author.");
+const getAuthor = async (req, res) => {
+    if (!req.params.authorId)
+        return;
+
+    const id = req.params.authorId;
+    const author = await authorService.getAuthor(id);
+    res.status(200).send({ status: "OK", data: author });
 }
 
-const createAuthor = (req, res) => {
-    const createdAuthor = authorService.createAuthor();
-    res.send("Create an author.");
+const createAuthor = async (req, res) => {
+    if (!req.body.email || !req.body.username || !req.body.password)
+        return;
+
+    const { email, username, password } = req.body;
+    const createdAuthor = await authorService.createAuthor(email, username, password);
+    res.status(201).send({ status: "OK", data: createdAuthor});
 }
 
-const updateAuthor = (req, res) => {
-    const updatedAuthor = authorService.updateAuthor();
-    res.send("Update an existing author.");
+const updateAuthorPassword = async (req, res) => {
+    if (!req.params.authorId || !req.body.newPassword)
+        return;
+
+    const id = req.params.authorId;
+    const newPassword = req.body.newPassword;
+    await authorService.updateAuthor(id, newPassword);
+    res.status(201).send({ status: "OK" });
 }
 
-const deleteAuthor = (req, res) => {
-    authorService.deleteAuthor();
-    res.send("Delete an existing author.");
+const deleteAuthor = async (req, res) => {
+    if (!req.params.authorId)
+        return;
+    
+    const id = req.params.authorId;
+    await authorService.deleteAuthor(id);
+    res.status(200).send({ status: "OK" });
 }
 
 module.exports = {
     getAllAuthors,
     getAuthor,
     createAuthor,
-    updateAuthor,
+    updateAuthorPassword,
     deleteAuthor
 };

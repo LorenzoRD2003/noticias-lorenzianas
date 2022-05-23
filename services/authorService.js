@@ -1,21 +1,30 @@
-const getAllAuthors = () => {
-    return;
+const Author = require('../database/Author');
+
+const getAllAuthors = async () => {
+    const allAuthors = await Author.find();
+    return allAuthors;
 }
 
-const getAuthor = () => {
-    return;
+const getAuthor = async id => {
+    const author = await Author.findById(id);
+    return author;
 }
 
-const createAuthor = () => {
-    return;
+const createAuthor = async (email, username, password) => {
+    const newAuthor = await Author.create({
+        email: email,
+        username: username,
+        password: password
+    });
+    return newAuthor;
 }
 
-const updateAuthor = () => {
-    return;
+const updateAuthor = async (id, newPassword) => {
+    await Author.findByIdAndUpdate(id, { password: newPassword });
 }
 
-const deleteAuthor = () => {
-    return;
+const deleteAuthor = async id => {
+    await Author.findByIdAndDelete(id);
 }
 
 module.exports = {
