@@ -1,10 +1,10 @@
 const mongoose = require("mongoose");
+const { v4: uuid } = require("uuid");
 
 const newsSchema = new mongoose.Schema({
     id: {
         type: Number,
-        required: true,
-        min: 1
+        default: uuid
     },
     headline: {
         type: String,
