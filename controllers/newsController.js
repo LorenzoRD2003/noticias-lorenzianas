@@ -1,5 +1,6 @@
 const { ApiError } = require("../modules/error-handler");
 const newsService = require("../services/newsService");
+const { validationResult } = require("express-validator");
 
 const getAllNewsArticles = async (req, res, next) => {
     try {
@@ -25,8 +26,21 @@ const getNewsArticle = async (req, res, next) => {
         if (!validationErrors.isEmpty())
             return next(ApiError.badRequestError(validationErrors.array()));
 
-        const newsArticle = await newsService.getNewsArticle(id);
+        const newsArticle = await newsService.getNewsArticle(req.params.newsId);
         res.status(200).send({ status: "OK", data: newsArticle });
+    } catch (err) {
+        next(ApiError.internalServerError(err.message));
+    }
+}
+
+const getNewsAuthor = async (req, res, next) => {
+    try {
+        const validationErrors = validationResult(req);
+        if (!validationErrors.isEmpty())
+            return next(ApiError.badRequestError(validationErrors.array()));
+
+        const newsArticle = await newsService.getNewsAuthor(newsId);
+        res.status(200).send({ status: "OK", data: newsAuthor });
     } catch (err) {
         next(ApiError.internalServerError(err.message));
     }
@@ -51,7 +65,7 @@ const updateNewsArticle = async (req, res, next) => {
         if (!validationErrors.isEmpty())
             return next(ApiError.badRequestError(validationErrors.array()));
 
-        await newsService.updateNewsArticle(id, req.body);
+        await newsService.updateNewsArticle(req.params.id, req.body);
         res.status(201).send({ status: "OK" });
     } catch (err) {
         next(ApiError.internalServerError(err.message));
@@ -64,7 +78,7 @@ const deleteNewsArticle = async (req, res, next) => {
         if (!validationErrors.isEmpty())
             return next(ApiError.badRequestError(validationErrors.array()));
 
-        await newsService.deleteNewsArticle(id);
+        await newsService.deleteNewsArticle(req.params.newsId);
         res.status(200).send({ status: "OK" });
     } catch (err) {
         next(ApiError.internalServerError(err.message));
