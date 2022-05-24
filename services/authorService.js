@@ -32,9 +32,10 @@ const usernameAlreadyAdded = async username => {
 }
 
 const getNewsByAuthor = async id => {
-    return await Author
+    const author = await Author
         .findById(id)
         .populate("news");
+    return author.news;
 }
 
 module.exports = {
