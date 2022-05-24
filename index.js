@@ -1,8 +1,8 @@
 require("dotenv").config();
 const express = require("express");
-require("./database/mongoose");
+require("./api/database/mongoose");
 const bodyParser = require("body-parser");
-const { ApiError, apiErrorHandler, api404Handler } = require("./modules/error-handler");
+const { apiErrorHandler, api404Handler } = require("./api/modules/error-handler");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -14,11 +14,11 @@ app.use(apiErrorHandler);
 app.listen(PORT, () => console.log(`Corriendo en el puerto ${PORT}`));
 
 // Router for the news
-const newsRouter = require("./routes/newsRoutes");
+const newsRouter = require("./api/routes/newsRoutes");
 app.use("/news", newsRouter);
 
 // Router for the authors
-const authorRouter = require("./routes/authorRoutes");
+const authorRouter = require("./api/routes/authorRoutes");
 app.use("/author", authorRouter);
 
 // Finally, check for errors and for 404
