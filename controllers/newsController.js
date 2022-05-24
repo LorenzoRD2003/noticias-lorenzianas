@@ -12,9 +12,9 @@ const getAllNewsArticles = async (req, res, next) => {
 
 const getNewsArticle = async (req, res, next) => {
     try {
-        const id = req.params.newsId;
-        if (!id)
-            return next(ApiError.badRequestError("There is no newsId param in request."));
+        const validationErrors = validationResult(req);
+        if (!validationErrors.isEmpty())
+            return next(ApiError.badRequestError(validationErrors.array()));
 
         const newsArticle = await newsService.getNewsArticle(id);
         res.status(200).send({ status: "OK", data: newsArticle });
@@ -25,9 +25,9 @@ const getNewsArticle = async (req, res, next) => {
 
 const createNewsArticle = async (req, res) => {
     try {
-        const { headline, body, lead, author, category, tags, image } = req.body;
-        if (!headline || !body || !lead || !author || !category || !tags || !image)
-            return next(ApiError.badRequestError("One of these keys is empty or is missing in request body: 'headline', 'body', 'lead', 'author', 'category', 'tags', 'image'"));
+        const validationErrors = validationResult(req);
+        if (!validationErrors.isEmpty())
+            return next(ApiError.badRequestError(validationErrors.array()));
 
         const createdNewsArticle = await newsService.createNewsArticle(req.body);
         res.status(201).send({ status: "OK", data: createdNewsArticle });
@@ -38,9 +38,9 @@ const createNewsArticle = async (req, res) => {
 
 const updateNewsArticle = async (req, res, next) => {
     try {
-        const id = req.params.newsId;
-        if (!id)
-            return next(ApiError.badRequestError("There is no newsId param in request."));
+        const validationErrors = validationResult(req);
+        if (!validationErrors.isEmpty())
+            return next(ApiError.badRequestError(validationErrors.array()));
 
         await newsService.updateNewsArticle(id, req.body);
         res.status(201).send({ status: "OK" });
@@ -51,9 +51,9 @@ const updateNewsArticle = async (req, res, next) => {
 
 const deleteNewsArticle = async (req, res, next) => {
     try {
-        const id = req.params.newsId;
-        if (!id)
-            return next(ApiError.badRequestError("There is no newsId param in request."));
+        const validationErrors = validationResult(req);
+        if (!validationErrors.isEmpty())
+            return next(ApiError.badRequestError(validationErrors.array()));
 
         await newsService.deleteNewsArticle(id);
         res.status(200).send({ status: "OK" });
