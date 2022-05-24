@@ -15,7 +15,7 @@ router.put("/:newsId", newsValidators.updateNewsArticleValidator, newsController
 
 router.delete("/:newsId", newsValidators.deleteNewsArticleValidator, newsController.deleteNewsArticle);
 
-//router.get("/:newsId/author", newsValidators.getNewsArticleValidator, newsController.getNewsAuthor);
+router.get("/:newsId/author", newsValidators.getNewsArticleValidator, newsController.getNewsAuthor);
 
 module.exports = router;
 

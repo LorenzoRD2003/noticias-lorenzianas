@@ -33,7 +33,7 @@ const getNewsArticle = async (req, res, next) => {
     }
 }
 
-const createNewsArticle = async (req, res) => {
+const createNewsArticle = async (req, res, next) => {
     try {
         const validationErrors = validationResult(req);
         if (!validationErrors.isEmpty())

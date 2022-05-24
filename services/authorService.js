@@ -1,18 +1,16 @@
 const Author = require('../models/Author');
+const News = require('../models/News');
 
 const getAllAuthors = async () => {
-    const allAuthors = await Author.find();
-    return allAuthors;
+    return await Author.find();
 }
 
 const getAuthor = async id => {
-    const author = await Author.findById(id);
-    return author;
+    return await Author.findById(id);
 }
 
 const createAuthor = async body => {
-    const newAuthor = await Author.create(body);
-    return newAuthor;
+    return await Author.create(body);
 }
 
 const updateAuthor = async (id, newPassword) => {
@@ -33,6 +31,12 @@ const usernameAlreadyAdded = async username => {
     return Boolean(result);
 }
 
+const getNewsByAuthor = async id => {
+    return await Author
+        .findById(id)
+        .populate("news");
+}
+
 module.exports = {
     getAllAuthors,
     getAuthor,
@@ -40,5 +44,6 @@ module.exports = {
     updateAuthor,
     deleteAuthor,
     emailAlreadyAdded,
-    usernameAlreadyAdded
+    usernameAlreadyAdded,
+    getNewsByAuthor
 }

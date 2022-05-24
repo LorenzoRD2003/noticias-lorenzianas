@@ -64,10 +64,24 @@ const deleteAuthor = async (req, res, next) => {
 
 }
 
+const getNewsByAuthor = async (req, res, next) => {
+    try {
+        const validationErrors = validationResult(req);
+        if (!validationErrors.isEmpty())
+            return next(ApiError.badRequestError(validationErrors.array()));
+
+        const newsArticles = await authorService.getNewsByAuthor(req.params.authorId);
+        res.status(200).send({ status: "OK", data: newsArticles });
+    } catch (err) {
+        next(ApiError.internalServerError(err.message));
+    }
+}
+
 module.exports = {
     getAllAuthors,
     getAuthor,
     createAuthor,
     updateAuthorPassword,
-    deleteAuthor
+    deleteAuthor,
+    getNewsByAuthor
 };

@@ -1,4 +1,6 @@
-const News = require("../database/News");
+const mongoose = require("mongoose");
+const News = require("../models/News");
+const Author = require("../models/Author");
 
 const getAllNewsArticles = async (query, limit, sortBy) => {
     return await News
@@ -12,7 +14,15 @@ const getNewsArticle = async id => {
 }
 
 const createNewsArticle = async body => {
-    return await News.create(body);
+    body.author = mongoose.Types.ObjectId(body.author);
+    console.log(body);
+    const createdNews = await News.create(body);
+
+    const author = await Author.findById(body.author);
+    author.news.push(createdNews);
+    author.save();
+
+    return createdNews;
 }
 
 const updateNewsArticle = async (id, body) => {
@@ -24,7 +34,11 @@ const deleteNewsArticle = async id => {
 }
 
 const getNewsAuthor = async id => {
-    
+    const news = await News
+        .findById(id)
+        .populate("author")
+
+    return news.author;
 }
 
 module.exports = {
@@ -32,5 +46,6 @@ module.exports = {
     getNewsArticle,
     createNewsArticle,
     updateNewsArticle,
-    deleteNewsArticle
+    deleteNewsArticle,
+    getNewsAuthor
 }

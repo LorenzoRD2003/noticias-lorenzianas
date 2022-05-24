@@ -4,10 +4,6 @@ const { createHash } = require("crypto");
 const bcrypt = require("bcrypt");
 
 const authorSchema = new Schema({
-    _id: {
-        type: String,
-        default: () => uuid()
-    },
     email: {
         type: String,
         required: true

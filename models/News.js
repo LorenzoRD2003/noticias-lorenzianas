@@ -2,10 +2,6 @@ const { Schema, model } = require("mongoose");
 const { v4: uuid } = require("uuid");
 
 const newsSchema = new Schema({
-    _id: {
-        type: String,
-        default: () => uuid()
-    },
     headline: {
         type: String,
         required: true
