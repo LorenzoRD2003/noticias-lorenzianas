@@ -3,7 +3,16 @@ const newsService = require("../services/newsService");
 
 const getAllNewsArticles = async (req, res, next) => {
     try {
-        const allNewsArticles = await newsService.getAllNewsArticles();
+        // I want to check only these params
+        const queryArray = Object.entries(req.query);
+        const paramsToCheck = queryArray.filter(([key, value]) => key == "author" || key == "category");
+        const query = Object.fromEntries(paramsToCheck);
+
+        // limit param (or limit is 10000 news)
+        const limit = req.query.limit || 10000;
+        const sortBy = req.query.sort || "-updatedAt";
+
+        const allNewsArticles = await newsService.getAllNewsArticles(query, limit, sortBy);
         res.status(200).send({ status: "OK", data: allNewsArticles });
     } catch (err) {
         next(ApiError.internalServerError(err.message));

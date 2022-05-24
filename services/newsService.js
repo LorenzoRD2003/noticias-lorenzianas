@@ -1,18 +1,18 @@
 const News = require("../database/News");
 
-const getAllNewsArticles = async () => {
-    const allNewsArticles = await News.find();
-    return allNewsArticles;
+const getAllNewsArticles = async (query, limit, sortBy) => {
+    return await News
+        .find(query)
+        .limit(limit)
+        .sort(sortBy);
 }
 
 const getNewsArticle = async id => {
-    const newsArticle = await News.findById(id);
-    return newsArticle;
+    return await News.findById(id);
 }
 
 const createNewsArticle = async body => {
-    const newsArticle = await News.create(body);
-    return newsArticle;
+    return await News.create(body);
 }
 
 const updateNewsArticle = async (id, body) => {
