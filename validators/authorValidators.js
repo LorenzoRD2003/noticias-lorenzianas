@@ -52,11 +52,11 @@ const createAuthorValidator = [
 ];
 
 const updateAuthorValidator = [
-    // New password must have at least 8 characters
     param("authorId")
         .trim()
         .exists()
         .withMessage("AuthorID is required."),
+    // New password must have at least 8 characters
     body("newPassword")
         .trim()
         .exists()
