@@ -1,7 +1,14 @@
-const { body } = require('express-validator');
+const { body, param } = require('express-validator');
 const authorService = require("../services/authorService");
 
-module.exports = [
+const getAuthorValidator = [
+    param("authorId")
+        .trim()
+        .exists()
+        .withMessage("AuthorID is required.")
+];
+
+const createAuthorValidator = [
     // Email must be an email and not be already in database
     body("email")
         .trim()
@@ -37,9 +44,39 @@ module.exports = [
     body("password")
         .trim()
         .exists()
-        .withMessage("Username is required.")
+        .withMessage("Password is required.")
         .isLength({ min: 8 })
         .withMessage("Password must be at least 8 chars long.")
         .matches(/^[A-Za-z0-9\_]+$/)
         .withMessage("Password must be alphanumeric.")
 ];
+
+const updateAuthorValidator = [
+    // New password must have at least 8 characters
+    param("authorId")
+        .trim()
+        .exists()
+        .withMessage("AuthorID is required."),
+    body("newPassword")
+        .trim()
+        .exists()
+        .withMessage("New password is required.")
+        .isLength({ min: 8 })
+        .withMessage("New password must be at least 8 chars long.")
+        .matches(/^[A-Za-z0-9\_]+$/)
+        .withMessage("New password must be alphanumeric.")
+];
+
+const deleteAuthorValidator = [
+    param("authorId")
+        .trim()
+        .exists()
+        .withMessage("AuthorID is required.")
+];
+
+module.exports = {
+    getAuthorValidator,
+    createAuthorValidator,
+    updateAuthorValidator,
+    deleteAuthorValidator
+}

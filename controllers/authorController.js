@@ -13,11 +13,11 @@ const getAllAuthors = async (req, res, next) => {
 
 const getAuthor = async (req, res, next) => {
     try {
-        const id = req.params.authorId;
-        if (!id)
-            return next(ApiError.badRequestError("There is no authorId param in request."));
+        const validationErrors = validationResult(req);
+        if (!validationErrors.isEmpty())
+            return next(ApiError.badRequestError(validationErrors.array()));
 
-        const author = await authorService.getAuthor(id);
+        const author = await authorService.getAuthor(req.params.authorId);
         res.status(200).send({ status: "OK", data: author });
     } catch (err) {
         next(ApiError.internalServerError(err.message));
