@@ -27,10 +27,22 @@ const deleteAuthor = async id => {
     await Author.findByIdAndDelete(id);
 }
 
+const emailAlreadyAdded = async email => {
+    const result = await Author.findOne({ email: email });
+    return Boolean(result);
+}
+
+const usernameAlreadyAdded = async username => {
+    const result = await Author.findOne({ username: username });
+    return Boolean(result);
+}
+
 module.exports = {
     getAllAuthors,
     getAuthor,
     createAuthor,
     updateAuthor,
-    deleteAuthor
+    deleteAuthor,
+    emailAlreadyAdded,
+    usernameAlreadyAdded
 }

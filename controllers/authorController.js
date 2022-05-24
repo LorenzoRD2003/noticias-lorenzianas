@@ -29,6 +29,14 @@ const createAuthor = async (req, res, next) => {
         if (!email || !username || !password)
             return next(ApiError.badRequestError("One of these keys is empty or is missing in request body: 'email', 'username', 'password'"));
 
+        const emailAlreadyAdded = await authorService.emailAlreadyAdded(email);
+        if (emailAlreadyAdded)
+            return next(ApiError.badRequestError("The email is already used by another author."));
+
+        const usernameAlreadyAdded = await authorService.usernameAlreadyAdded(username);
+        if (usernameAlreadyAdded)
+            return next(ApiError.badRequestError("The username is already used by another author."));
+
         const createdAuthor = await authorService.createAuthor(email, username, password);
         res.status(201).send({ status: "OK", data: createdAuthor });
     } catch (err) {
