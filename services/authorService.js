@@ -10,12 +10,8 @@ const getAuthor = async id => {
     return author;
 }
 
-const createAuthor = async (email, username, password) => {
-    const newAuthor = await Author.create({
-        email: email,
-        username: username,
-        password: password
-    });
+const createAuthor = async body => {
+    const newAuthor = await Author.create(body);
     return newAuthor;
 }
 

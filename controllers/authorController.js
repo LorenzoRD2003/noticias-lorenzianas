@@ -1,4 +1,5 @@
 const { ApiError } = require("../modules/error-handler");
+const { validationResult } = require("express-validator");
 const authorService = require("../services/authorService");
 
 const getAllAuthors = async (req, res, next) => {
@@ -25,19 +26,11 @@ const getAuthor = async (req, res, next) => {
 
 const createAuthor = async (req, res, next) => {
     try {
-        const { email, username, password } = req.body;
-        if (!email || !username || !password)
-            return next(ApiError.badRequestError("One of these keys is empty or is missing in request body: 'email', 'username', 'password'"));
+        const validationErrors = validationResult(req);
+        if (!validationErrors.isEmpty())
+            return next(ApiError.badRequestError(validationErrors.array()));
 
-        const emailAlreadyAdded = await authorService.emailAlreadyAdded(email);
-        if (emailAlreadyAdded)
-            return next(ApiError.badRequestError("The email is already used by another author."));
-
-        const usernameAlreadyAdded = await authorService.usernameAlreadyAdded(username);
-        if (usernameAlreadyAdded)
-            return next(ApiError.badRequestError("The username is already used by another author."));
-
-        const createdAuthor = await authorService.createAuthor(email, username, password);
+        const createdAuthor = await authorService.createAuthor(req.body);
         res.status(201).send({ status: "OK", data: createdAuthor });
     } catch (err) {
         next(ApiError.internalServerError(err.message));
