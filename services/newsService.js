@@ -1,21 +1,27 @@
-const getAllNewsArticles = () => {
-    return;
+const News = require("../database/News");
+
+const getAllNewsArticles = async () => {
+    const allNewsArticles = await News.find();
+    return allNewsArticles;
 }
 
-const getNewsArticle = () => {
-    return;
+const getNewsArticle = async id => {
+    const newsArticle = await News.findById(id);
+    return newsArticle;
 }
 
-const createNewsArticle = () => {
-    return;
+const createNewsArticle = async body => {
+    const newsArticle = await News.create(body);
+    return newsArticle;
 }
 
-const updateNewsArticle = () => {
-    return;
+const updateNewsArticle = async (id, body) => {
+    console.log(1);
+    await News.findByIdAndUpdate(id, body);
 }
 
-const deleteNewsArticle = () => {
-    return;
+const deleteNewsArticle = async id => {
+    await News.findByIdAndDelete(id);
 }
 
 module.exports = {

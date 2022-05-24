@@ -1,28 +1,44 @@
 const newsService = require("../services/newsService");
 
-const getAllNewsArticles = (req, res) => {
-    const allNewsArticles = newsService.getAllNewsArticles();
-    res.send("Get all news articles.");
+const getAllNewsArticles = async (req, res) => {
+    const allNewsArticles = await newsService.getAllNewsArticles();
+    res.status(200).send({ status: "OK", data: allNewsArticles });
 }
 
-const getNewsArticle = (req, res) => {
-    const newsArticle = newsService.getNewsArticle();
-    res.send("Get an existing news article.");
+const getNewsArticle = async (req, res) => {
+    const id = req.params.newsId;
+    if (!id)
+        return;
+    
+    const newsArticle = await newsService.getNewsArticle(id);
+    res.status(200).send({ status: "OK", data: newsArticle });
 }
 
-const createNewsArticle = (req, res) => {
-    const createdNewsArticle = newsService.createNewsArticle();
-    res.send("Create a news article.");
+const createNewsArticle = async (req, res) => {
+    const { headline, body, lead, author, category, tags, image } = req.body;
+    if (!headline || !body || !lead || !author || !category || !tags || !image)
+        return;
+
+    const createdNewsArticle = await newsService.createNewsArticle(req.body);
+    res.status(201).send({ status: "OK", data: createdNewsArticle });
 }
 
-const updateNewsArticle = (req, res) => {
-    const updatedNewsArticle = newsService.createdNewsArticle();
-    res.send("Update an existing news article.");
+const updateNewsArticle = async (req, res) => {
+    const id = req.params.newsId;
+    if (!id)
+        return;
+
+    await newsService.updateNewsArticle(id, req.body);
+    res.status(201).send({ status: "OK" });
 }
 
-const deleteNewsArticle = (req, res) => {
-    newsService.deleteNewsArticle();
-    res.send("Delete an existing news article.");
+const deleteNewsArticle = async (req, res) => {
+    const id = req.params.newsId;
+    if (!id)
+        return;
+
+    await newsService.deleteNewsArticle(id);
+    res.status(200).send({ status: "OK" });
 }
 
 module.exports = {

@@ -10,15 +10,18 @@ const newsSchema = new Schema({
         type: String,
         required: true
     },
-    author: {
-        type: Number,
+    lead: {
+        type: String,
         required: true
     },
     body: {
         type: [String],
         required: true
     },
-    lead: String,
+    author: {
+        type: String,
+        required: true
+    },
     date: {
         type: Date,
         default: () => (new Date).toLocaleString()
@@ -28,8 +31,18 @@ const newsSchema = new Schema({
         min: 0,
         default: 0,
     },
-    category: String,
-    tags: [String],
+    category: {
+        type: String,
+        required: true
+    },
+    tags: {
+        type: [String],
+        required: true
+    },
+    image: {
+        type: String,
+        required: true
+    }
 }, {
     timestamps: true
 });
