@@ -25,9 +25,9 @@ const apiErrorHandler = (err, req, res, next) => {
     console.log(err);
 
     if (err instanceof ApiError)
-        return res.status(err.code).send(err.message);
+        return res.status(err.code).send({status: "FAILED", data: { error: err.message } });
     else
-        return res.status(500).send("Ha ocurrido un error imprevisto.");
+        return res.status(500).send({ status: "FAILED", data: { error: "Unknown error." } });
 }
 
 module.exports = { ApiError, apiErrorHandler };
