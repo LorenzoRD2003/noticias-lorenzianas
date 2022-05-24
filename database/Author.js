@@ -28,12 +28,15 @@ const authorSchema = new Schema({
     timestamps: true
 });
 
-authorSchema.methods.encryptPassword = async password => {
-    const salt = await bcrypt.genSalt(10);
-    return await bcrypt.hash(password, salt);
-};
+authorSchema.pre("save", async function (next) {
+    if (!this.isModified("password"))
+        return next();
 
-authorSchema.methods.matchPassword = async function(password) {
+    const salt = await bcrypt.genSalt(10);
+    this.password = await bcrypt.hash(this.password, salt);
+});
+
+authorSchema.methods.matchPassword = async function (password) {
     return await bcrypt.compare(password, this.password);
 }
 
