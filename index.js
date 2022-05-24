@@ -2,7 +2,7 @@ require("dotenv").config();
 const express = require("express");
 require("./database/mongoose");
 const bodyParser = require("body-parser");
-const { ApiError, apiErrorHandler } = require("./modules/error-handler");
+const { ApiError, apiErrorHandler, api404Handler } = require("./modules/error-handler");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -21,6 +21,7 @@ app.use("/news", newsRouter);
 const authorRouter = require("./routes/authorRoutes");
 app.use("/author", authorRouter);
 
-// Finally, check for errors
+// Finally, check for errors and for 404
 app.use(apiErrorHandler);
+app.use(api404Handler);
 

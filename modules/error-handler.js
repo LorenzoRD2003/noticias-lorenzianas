@@ -30,4 +30,8 @@ const apiErrorHandler = (err, req, res, next) => {
         return res.status(500).send({ status: "FAILED", data: { error: "Unknown error." } });
 }
 
-module.exports = { ApiError, apiErrorHandler };
+const api404Handler = (req, res) => {
+    return res.status(404).send({ status: "FAILED", data: { error: "The required resource was not found." } });
+}
+
+module.exports = { ApiError, apiErrorHandler, api404Handler };
