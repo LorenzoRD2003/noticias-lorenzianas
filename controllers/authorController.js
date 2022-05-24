@@ -10,11 +10,11 @@ const getAllAuthors = async (req, res, next) => {
     }
 }
 
-const getAuthor = async (req, res) => {
+const getAuthor = async (req, res, next) => {
     try {
         const id = req.params.authorId;
         if (!id)
-            return;
+            return next(ApiError.badRequestError("There is no authorId param in request."));
 
         const author = await authorService.getAuthor(id);
         res.status(200).send({ status: "OK", data: author });
@@ -23,11 +23,11 @@ const getAuthor = async (req, res) => {
     }
 }
 
-const createAuthor = async (req, res) => {
+const createAuthor = async (req, res, next) => {
     try {
         const { email, username, password } = req.body;
         if (!email || !username || !password)
-            return;
+            return next(ApiError.badRequestError("One of these keys is empty or is missing in request body: 'email', 'username', 'password'"));
 
         const createdAuthor = await authorService.createAuthor(email, username, password);
         res.status(201).send({ status: "OK", data: createdAuthor });
@@ -36,13 +36,16 @@ const createAuthor = async (req, res) => {
     }
 }
 
-const updateAuthorPassword = async (req, res) => {
+const updateAuthorPassword = async (req, res, next) => {
     try {
         const id = req.params.authorId;
         const newPassword = req.body.newPassword;
 
-        if (!id || !newPassword)
-            return;
+        if (!id)
+            return next(ApiError.badRequestError("There is no authorId param in request."));
+
+        if (!newPassword)
+            return next(ApiError.badRequestError("The key 'newPassword' is missing or is empty in request body."));
 
         await authorService.updateAuthor(id, newPassword);
         res.status(201).send({ status: "OK" });
@@ -51,11 +54,11 @@ const updateAuthorPassword = async (req, res) => {
     }
 }
 
-const deleteAuthor = async (req, res) => {
+const deleteAuthor = async (req, res, next) => {
     try {
         const id = req.params.authorId;
         if (!id)
-            return;
+            return next(ApiError.badRequestError("There is no authorId param in request."));
 
         await authorService.deleteAuthor(id);
         res.status(200).send({ status: "OK" });
