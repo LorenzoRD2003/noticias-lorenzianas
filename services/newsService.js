@@ -16,7 +16,6 @@ const createNewsArticle = async body => {
 }
 
 const updateNewsArticle = async (id, body) => {
-    console.log(1);
     await News.findByIdAndUpdate(id, body);
 }
 

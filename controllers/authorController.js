@@ -39,14 +39,9 @@ const createAuthor = async (req, res, next) => {
 
 const updateAuthorPassword = async (req, res, next) => {
     try {
-        const id = req.params.authorId;
-        const newPassword = req.body.newPassword;
-
-        if (!id)
-            return next(ApiError.badRequestError("There is no authorId param in request."));
-
-        if (!newPassword)
-            return next(ApiError.badRequestError("The key 'newPassword' is missing or is empty in request body."));
+        const validationErrors = validationResult(req);
+        if (!validationErrors.isEmpty())
+            return next(ApiError.badRequestError(validationErrors.array()));
 
         await authorService.updateAuthor(id, newPassword);
         res.status(201).send({ status: "OK" });
@@ -57,9 +52,9 @@ const updateAuthorPassword = async (req, res, next) => {
 
 const deleteAuthor = async (req, res, next) => {
     try {
-        const id = req.params.authorId;
-        if (!id)
-            return next(ApiError.badRequestError("There is no authorId param in request."));
+        const validationErrors = validationResult(req);
+        if (!validationErrors.isEmpty())
+            return next(ApiError.badRequestError(validationErrors.array()));
 
         await authorService.deleteAuthor(id);
         res.status(200).send({ status: "OK" });
