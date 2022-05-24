@@ -23,6 +23,10 @@ const deleteNewsArticle = async id => {
     await News.findByIdAndDelete(id);
 }
 
+const getNewsAuthor = async id => {
+    
+}
+
 module.exports = {
     getAllNewsArticles,
     getNewsArticle,

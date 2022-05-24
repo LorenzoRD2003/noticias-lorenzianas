@@ -43,7 +43,7 @@ const updateAuthorPassword = async (req, res, next) => {
         if (!validationErrors.isEmpty())
             return next(ApiError.badRequestError(validationErrors.array()));
 
-        await authorService.updateAuthor(id, newPassword);
+        await authorService.updateAuthor(req.params.authorId, req.body.newPassword);
         res.status(201).send({ status: "OK" });
     } catch (err) {
         next(ApiError.internalServerError(err.message));
@@ -56,7 +56,7 @@ const deleteAuthor = async (req, res, next) => {
         if (!validationErrors.isEmpty())
             return next(ApiError.badRequestError(validationErrors.array()));
 
-        await authorService.deleteAuthor(id);
+        await authorService.deleteAuthor(req.params.authorId);
         res.status(200).send({ status: "OK" });
     } catch (err) {
         next(ApiError.internalServerError(err.message));

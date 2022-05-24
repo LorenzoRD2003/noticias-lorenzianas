@@ -33,19 +33,6 @@ const getNewsArticle = async (req, res, next) => {
     }
 }
 
-const getNewsAuthor = async (req, res, next) => {
-    try {
-        const validationErrors = validationResult(req);
-        if (!validationErrors.isEmpty())
-            return next(ApiError.badRequestError(validationErrors.array()));
-
-        const newsArticle = await newsService.getNewsAuthor(newsId);
-        res.status(200).send({ status: "OK", data: newsAuthor });
-    } catch (err) {
-        next(ApiError.internalServerError(err.message));
-    }
-}
-
 const createNewsArticle = async (req, res) => {
     try {
         const validationErrors = validationResult(req);
@@ -65,7 +52,7 @@ const updateNewsArticle = async (req, res, next) => {
         if (!validationErrors.isEmpty())
             return next(ApiError.badRequestError(validationErrors.array()));
 
-        await newsService.updateNewsArticle(req.params.id, req.body);
+        await newsService.updateNewsArticle(req.params.newsId, req.body);
         res.status(201).send({ status: "OK" });
     } catch (err) {
         next(ApiError.internalServerError(err.message));
@@ -85,10 +72,24 @@ const deleteNewsArticle = async (req, res, next) => {
     }
 }
 
+const getNewsAuthor = async (req, res, next) => {
+    try {
+        const validationErrors = validationResult(req);
+        if (!validationErrors.isEmpty())
+            return next(ApiError.badRequestError(validationErrors.array()));
+
+        const newsAuthor = await newsService.getNewsAuthor(req.params.newsId);
+        res.status(200).send({ status: "OK", data: newsAuthor });
+    } catch (err) {
+        next(ApiError.internalServerError(err.message));
+    }
+}
+
 module.exports = {
     getAllNewsArticles,
     getNewsArticle,
     createNewsArticle,
     updateNewsArticle,
-    deleteNewsArticle
+    deleteNewsArticle,
+    getNewsAuthor
 };

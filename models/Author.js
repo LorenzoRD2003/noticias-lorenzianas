@@ -23,7 +23,13 @@ const authorSchema = new Schema({
     description: {
         type: String,
         default: ""
-    }
+    },
+    news: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: "News"
+        }
+    ]
 }, {
     timestamps: true
 });
