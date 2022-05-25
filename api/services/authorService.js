@@ -1,8 +1,11 @@
 const Author = require('../models/Author');
 const News = require('../models/News');
 
-const getAllAuthors = async () => {
-    return await Author.find();
+const getAllAuthors = async (limit, sortBy) => {
+    return await Author
+        .find()
+        .limit(limit)
+        .sort(sortBy);
 }
 
 const getAuthor = async id => {

@@ -4,7 +4,11 @@ const authorService = require("../services/authorService");
 
 const getAllAuthors = async (req, res, next) => {
     try {
-        const allAuthors = await authorService.getAllAuthors();
+        // limit param (or limit is 10000 authors)
+        const limit = req.query.limit || 10000;
+        const sortBy = req.query.sort || "-updatedAt";
+
+        const allAuthors = await authorService.getAllAuthors(limit, sortBy);
         res.status(200).send({ status: "OK", data: allAuthors });
     } catch (err) {
         next(ApiError.internalServerError(err.message));
