@@ -36,14 +36,17 @@ const bcrypt = require("bcrypt");
  *             format: uuid
  *             readOnly: true
  *             example: 628d5bef9394d666e446a5b1
+ *           default: []
  *           example: ["628d5ea7611737bdd2e93896", "628d5ea6611737bdd2e93892", "628d5c9c4ce486ff956d4bcb"]
  *         createdAt:
  *           type: string
  *           format: date-time
+ *           readOnly: true
  *           example: 2022-05-24T22:30:52.396Z
  *         updatedAt:
  *           type: string
  *           format: date-time
+ *           readOnly: true
  *           example: 2022-05-24T22:30:52.396Z
  */
 const authorSchema = new Schema({
