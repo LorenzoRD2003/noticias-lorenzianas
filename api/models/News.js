@@ -21,6 +21,12 @@ const { Schema, model } = require("mongoose");
  *           type: string
  *           required: true
  *           example: This is an example for the lead, a sentence which is longer than the headline.
+ *         body:
+ *           type: array
+ *           items:
+ *             type: string
+ *           required: true
+ *           example: ["First paragraph.", "Second paragraph.", "Third paragraph."]
  *         author:
  *           type: string
  *           format: uuid
@@ -39,6 +45,12 @@ const { Schema, model } = require("mongoose");
  *           type: string
  *           required: true
  *           example: Sports
+ *         tags:
+ *           type: array
+ *           items:
+ *             type: string
+ *           required: true
+ *           example: ["Basketball", "Michael Jordan", "Chicago Bulls"]
  *         image:
  *           type: string
  *           required: true

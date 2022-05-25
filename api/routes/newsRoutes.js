@@ -66,7 +66,7 @@ const router = express.Router();
  *                   properties:
  *                     error:
  *                       type: string 
- *                       example: "Some error message"
+ *                       example: "Some error message."
  */
 router.get("/", newsController.getAllNewsArticles);
 
