@@ -6,3 +6,4 @@ Proyecto de práctica.
 * Node.js
 * Express.js
 * MongoDB
+* Swagger
