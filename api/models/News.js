@@ -31,15 +31,15 @@ const { Schema, model } = require("mongoose");
  *           type: string
  *           format: uuid
  *           required: true
- *           readOnly: true
  *           example: 628d5bef9394d666e446a5b1
  *         date:
  *           type: string
- *           format: date
+ *           format: date-time
+ *           readOnly: true
  *           example: 2022-05-24T22:30:52.396Z
  *         views:
  *           type: number
- *           required: true
+ *           default: 0
  *           example: 4
  *         category:
  *           type: string
@@ -57,11 +57,15 @@ const { Schema, model } = require("mongoose");
  *           example: http://placeimg.com/640/480
  *         createdAt:
  *           type: string
- *           format: date
+ *           format: date-time
+ *           readOnly: true
+ *           required: false
  *           example: 2022-05-24T22:30:52.396Z
  *         updatedAt:
  *           type: string
- *           format: date
+ *           format: date-time
+ *           readOnly: true
+ *           required: false
  *           example: 2022-05-24T22:30:52.396Z
  */
 const newsSchema = new Schema({

@@ -1,4 +1,5 @@
 const { body, param } = require('express-validator');
+const authorService = require("../services/authorService");
 
 const getNewsArticleValidator = [
     param("newsId")
@@ -19,7 +20,14 @@ const createNewsArticleValidator = [
         .withMessage("Body key is required."),
     body("author")
         .exists()
-        .withMessage("Author key is required."),
+        .withMessage("Author key is required.")
+        .custom(async author => {
+            const authorExists = Boolean(await authorService.getAuthor(author));
+            if (!authorExists)
+                throw new Error("Author does not exist.");
+            
+            return true;
+        }),
     body("category")
         .exists()
         .withMessage("Category key is required."),

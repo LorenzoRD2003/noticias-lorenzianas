@@ -53,7 +53,7 @@ const updateNewsArticle = async (req, res, next) => {
             return next(ApiError.badRequestError(validationErrors.array()));
 
         await newsService.updateNewsArticle(req.params.newsId, req.body);
-        res.status(201).send({ status: "OK" });
+        res.status(204).send({ status: "OK" });
     } catch (err) {
         next(ApiError.internalServerError(err.message));
     }
@@ -66,7 +66,7 @@ const deleteNewsArticle = async (req, res, next) => {
             return next(ApiError.badRequestError(validationErrors.array()));
 
         await newsService.deleteNewsArticle(req.params.newsId);
-        res.status(200).send({ status: "OK" });
+        res.status(204).send({ status: "OK" });
     } catch (err) {
         next(ApiError.internalServerError(err.message));
     }

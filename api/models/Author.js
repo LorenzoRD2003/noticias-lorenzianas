@@ -21,11 +21,13 @@ const bcrypt = require("bcrypt");
  *         username:
  *           type: string
  *           required: true
+ *           minLength: 8
  *           example: Mckenna40
  *         password:
  *           type: string
  *           format: password
  *           required: true
+ *           minLength: 8
  *           example: L6voab0Fh6OepgS
  *         news:
  *           type: array
@@ -37,11 +39,11 @@ const bcrypt = require("bcrypt");
  *           example: ["628d5ea7611737bdd2e93896", "628d5ea6611737bdd2e93892", "628d5c9c4ce486ff956d4bcb"]
  *         createdAt:
  *           type: string
- *           format: date
+ *           format: date-time
  *           example: 2022-05-24T22:30:52.396Z
  *         updatedAt:
  *           type: string
- *           format: date
+ *           format: date-time
  *           example: 2022-05-24T22:30:52.396Z
  */
 const authorSchema = new Schema({
