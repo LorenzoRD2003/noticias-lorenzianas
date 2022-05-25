@@ -31,12 +31,6 @@ const usernameAlreadyAdded = async username => {
     return Boolean(result);
 }
 
-const getNewsByAuthor = async id => {
-    const author = await Author
-        .findById(id)
-        .populate("news");
-    return author.news;
-}
 
 module.exports = {
     getAllAuthors,
@@ -45,6 +39,5 @@ module.exports = {
     updateAuthor,
     deleteAuthor,
     emailAlreadyAdded,
-    usernameAlreadyAdded,
-    getNewsByAuthor
+    usernameAlreadyAdded
 }
