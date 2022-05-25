@@ -37,7 +37,6 @@ const router = express.Router();
  *         required: false
  *         schema:
  *           type: string
- * 
  *     responses:
  *       200:
  *         description: OK

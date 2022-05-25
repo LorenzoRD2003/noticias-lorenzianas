@@ -11,6 +11,20 @@ const router = express.Router();
  *     tags:
  *       - Author
  *     summary: Returns a list of authors.
+ *     description: Returns a list of news based on the conditions set on the parameters.
+ *     parameters:
+ *       - in: query
+ *         name: limit
+ *         description: Limit of news to get.
+ *         required: false
+ *         schema:
+ *           type: integer
+ *       - in: query
+ *         name: sort
+ *         description: Variable to use in order to sort the news array.
+ *         required: false
+ *         schema:
+ *           type: string
  *     responses:
  *       200:
  *         description: OK
