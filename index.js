@@ -3,8 +3,6 @@ const express = require("express");
 require("./api/database/mongoose");
 const bodyParser = require("body-parser");
 const { apiErrorHandler, api404Handler } = require("./api/modules/error-handler");
-const { swaggerSpec } = require("./api/modules/swagger");
-const swaggerUi = require('swagger-ui-express');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -23,13 +21,9 @@ app.use("/news", newsRouter);
 const authorRouter = require("./api/routes/authorRoutes");
 app.use("/author", authorRouter);
 
-// Routes to swagger documents in HTML and JSON
-app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-
-app.get("/api/docs.json", (req, res) => {
-    res.setHeader("Content-Type", "application/json");
-    res.send(swaggerSpec);
-});
+// Router for the documentation
+const { router: docsRouter } = require("./api/modules/swagger");
+app.use("/api", docsRouter);
 
 // Finally, check for errors and for 404
 app.use(apiErrorHandler);

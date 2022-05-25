@@ -1,6 +1,57 @@
 const { Schema, model } = require("mongoose");
-const { v4: uuid } = require("uuid");
 
+/**
+ * @openapi
+ * components:
+ *   schemas:
+ *     News:
+ *       type: object
+ *       properties:
+ *         _id:
+ *           type: string
+ *           format: uuid
+ *           required: true
+ *           readOnly: true
+ *           example: 628d5c9c4ce486ff956d4bcb
+ *         headline:
+ *           type: string
+ *           required: true
+ *           example: Headline example.
+ *         lead:
+ *           type: string
+ *           required: true
+ *           example: This is an example for the lead, a sentence which is longer than the headline.
+ *         author:
+ *           type: string
+ *           format: uuid
+ *           required: true
+ *           readOnly: true
+ *           example: 628d5bef9394d666e446a5b1
+ *         date:
+ *           type: string
+ *           format: date
+ *           example: 2022-05-24T22:30:52.396Z
+ *         views:
+ *           type: number
+ *           required: true
+ *           example: 4
+ *         category:
+ *           type: string
+ *           required: true
+ *           example: Sports
+ *         image:
+ *           type: string
+ *           required: true
+ *           example: http://placeimg.com/640/480
+ *         createdAt:
+ *           type: string
+ *           format: date
+ *           example: 2022-05-24T22:30:52.396Z
+ *         updatedAt:
+ *           type: string
+ *           format: date
+ *           example: 2022-05-24T22:30:52.396Z
+ */
 const newsSchema = new Schema({
     headline: {
         type: String,

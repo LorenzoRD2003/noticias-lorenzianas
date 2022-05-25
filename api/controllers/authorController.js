@@ -69,6 +69,5 @@ module.exports = {
     getAuthor,
     createAuthor,
     updateAuthorPassword,
-    deleteAuthor,
-    getNewsByAuthor
+    deleteAuthor
 };
