@@ -1,10 +1,11 @@
 import React from "react";
+import { Link } from "react-router-dom"
 
-const NavbarTitle = props => <a class="navbar-brand" href={props.link}>{props.title}</a>
+const NavbarTitle = props => <Link class="navbar-brand" to={props.link}>{props.title}</Link>
 
 const NavbarItem = props => (
     <li class="nav-item">
-        <a class="nav-link" href={props.link}>{props.text}</a>
+        <Link class="nav-link" to={props.link}>{props.text}</Link>
     </li>
 );
 
