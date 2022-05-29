@@ -5,5 +5,8 @@ Proyecto de práctica.
 * JavaScript
 * Node.js
 * Express.js
+* React.js
+* Bootstrap
 * MongoDB
 * Swagger
+* Axios

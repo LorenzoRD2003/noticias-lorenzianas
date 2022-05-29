@@ -5,7 +5,7 @@ const bodyParser = require("body-parser");
 const { apiErrorHandler, api404Handler } = require("./api/modules/error-handler");
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5000;
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
