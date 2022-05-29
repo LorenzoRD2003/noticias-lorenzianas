@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const nodeReq = axios.create({
-    baseURL: location.origin,
+    baseURL: "http://localhost:5000/",
     headers: {
         "X-Requested-With": "XMLHttpRequest",
         "Content-Type": "application/json"
