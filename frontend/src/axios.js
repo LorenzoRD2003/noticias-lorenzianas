@@ -27,4 +27,4 @@ nodeReq.interceptors.response.use(res => {
     }
 }, err => Promise.reject(err));
 
-module.exports = { axios: nodeReq };
+export default nodeReq;

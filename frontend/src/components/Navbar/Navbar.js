@@ -1,33 +1,40 @@
 import React from "react";
 import { Link } from "react-router-dom"
+import { loggedOutItems, loggedInItems } from "./NavbarItems";
 
-const NavbarTitle = props => <Link class="navbar-brand" to={props.link}>{props.title}</Link>
+// Navbar Title
+const NavbarTitle = props => <Link className="navbar-brand" to={props.link}>{props.title}</Link>
 
+// Navbar Item
 const NavbarItem = props => (
-    <li class="nav-item">
-        <Link class="nav-link" to={props.link}>{props.text}</Link>
+    <li className="nav-item">
+        <Link className="nav-link" to={props.link}>{props.text}</Link>
     </li>
 );
 
+// Navbar List
 const NavbarList = props => {
-    const listItems = props.items.map(item => <NavbarItem text={item.text} link={item.link} />);
+    const listItems = props.items.map((item, index) => <NavbarItem key={index} text={item.text} link={item.link} />);
     return (
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
+        <div className="collapse navbar-collapse" id="navbarNav">
+            <ul className="navbar-nav">
                 {listItems}
             </ul>
         </div>
     );
 }
 
+// Main Component
 const Navbar = props => {
+    const items = props.loggedIn ? loggedInItems : loggedOutItems;
+
     return (
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <nav className="navbar navbar-expand-lg navbar-light bg-light">
             <NavbarTitle
                 title={props.title}
                 link={props.homeLink}
             />
-            <NavbarList items={props.items} />
+            <NavbarList items={items}/>
         </nav>
     );
 }

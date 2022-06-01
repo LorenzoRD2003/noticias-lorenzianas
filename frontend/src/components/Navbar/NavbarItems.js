@@ -1,34 +1,34 @@
-const items = [
+const loggedOutItems = [
     {
         "text": "Inicio",
-        "link": "#"
+        "link": "/"
     },
     {
         "text": "Iniciar sesión",
-        "link": "#"
+        "link": "/login"
     }
 ];
 
 const loggedInItems = [
     {
         "text": "Inicio",
-        "link": "#"
+        "link": "/"
     },
     {
         "text": "Cerrar sesión",
-        "link": "#"
+        "link": "/logout"
     },
     {
         "text": "Mi perfil",
-        "link": "#"
+        "link": "/profile"
     },
     {
         "text": "Publicar noticia",
-        "link": "#"
+        "link": "/publish"
     }
 ];
 
 module.exports = {
-    items,
+    loggedOutItems,
     loggedInItems
 }

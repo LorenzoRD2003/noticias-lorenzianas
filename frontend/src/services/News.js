@@ -1,28 +1,28 @@
-import { axios } from "../axios";
+import nodeReq from "../axios.js";
 
 class NewsService {
     getAll() {
-        return axios.get("/news");
+        return nodeReq.get("/news");
     }
 
     get(id) {
-        return axios.get(`/news/${id}`);
+        return nodeReq.get(`/news/${id}`);
     }
 
     getAuthor(id) {
-        return axios.get(`/news/${id}/author`);
+        return nodeReq.get(`/news/${id}/author`);
     }
 
     create(data) {
-        return axios.post("/news", data);
+        return nodeReq.post("/news", data);
     }
 
     update(data) {
-        return axios.put("/news", data);
+        return nodeReq.put("/news", data);
     }
 
     delete(id) {
-        return axios.delete(`/news/${id}`);
+        return nodeReq.delete(`/news/${id}`);
     }
 }
 

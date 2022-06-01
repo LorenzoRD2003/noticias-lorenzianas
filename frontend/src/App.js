@@ -1,20 +1,29 @@
 import React, {useState} from "react";
-import { Switch, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import Navbar from "./components/Navbar/Navbar";
-import { items, loggedInItems } from "./components/Navbar/NavbarItems";
+
+import MainPage from "./components/MainPage";
 
 function App() {
-    const [loggedIn, setLoggedIn] = useState(false);
+    const [user, setUser] = useState(null);
+
+    const onLogin = user => {
+        setUser(user);
+    }
 
     return (
-        <div>
+        <div className="container">
             <Navbar
                 title="Agencia de Noticias Lorenzianas"
-                homeLink="#"
-                items={loggedIn ? loggedInItems : items}
+                homeLink="/"
+                loggedIn={Boolean(user)}
             />
+            <Routes>
+                <Route path="/" element={<MainPage />}/>
+                <Route path="/login" />
+            </Routes>
         </div>
     );
 }

@@ -1,24 +1,24 @@
-import { axios } from "../axios";
+import nodeReq from "../axios";
 
 class AuthorService {
     getAll() {
-        return axios.get(`/author`);
+        return nodeReq.get(`/author`);
     }
 
     get(id) {
-        return axios.get(`/author/${id}`);
+        return nodeReq.get(`/author/${id}`);
     }
 
     create(data) {
-        return axios.post("/author", data);
+        return nodeReq.post("/author", data);
     }
 
     updatePassword(data) {
-        return axios.put("/author", data);
+        return nodeReq.put("/author", data);
     }
 
     delete(id) {
-        return axios.delete(`/author/${id}`);
+        return nodeReq.delete(`/author/${id}`);
     }
 }
 
