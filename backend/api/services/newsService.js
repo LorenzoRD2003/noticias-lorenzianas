@@ -10,7 +10,13 @@ const getAllNewsArticles = async (query, limit, sortBy) => {
 }
 
 const getNewsArticle = async id => {
-    return await News.findById(id);
+    const news = await News.findById(id);
+    
+    // Add one new view
+    news.views++;
+    news.save();
+    
+    return news;
 }
 
 const createNewsArticle = async body => {
