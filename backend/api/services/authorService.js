@@ -1,5 +1,4 @@
 const Author = require('../models/Author');
-const News = require('../models/News');
 
 const getAllAuthors = async (limit, sortBy) => {
     return await Author
@@ -9,7 +8,15 @@ const getAllAuthors = async (limit, sortBy) => {
 }
 
 const getAuthor = async id => {
-    return await Author.findById(id);
+    const options = { sort: "-createdAt" };
+
+    return await Author
+        .findById(id)
+        .populate({
+            path: "news",
+            select: "_id headline createdAt",
+            options
+        });
 }
 
 const createAuthor = async body => {

@@ -11,7 +11,7 @@ const getAllNewsArticles = async (req, res, next) => {
 
         // limit param (or limit is 10000 news)
         const limit = req.query.limit || 10000;
-        const sortBy = req.query.sort || "-updatedAt";
+        const sortBy = req.query.sort || "-createdAt";
 
         const allNewsArticles = await newsService.getAllNewsArticles(query, limit, sortBy);
         res.status(200).send({ status: "OK", data: allNewsArticles });

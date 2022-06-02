@@ -23,14 +23,18 @@ const NewsImage = props => (
     />
 );
 
-const NewsData = props => (
-    <div>
-        <h4>
-            <Link to={`/author/${props.authorId}`}>Por {props.authorName}</Link> --- {formatDate(props.date)}
-        </h4>
-        <h6>Vista {props.views} veces</h6>
-    </div>
-);
+const NewsData = props => {
+    const authorLink = <Link to={`/author/${props.authorId}`}>{props.authorName}</Link>;
+
+    return (
+        <div>
+            <h4>
+                Por {authorLink} --- {formatDate(props.date)}
+            </h4>
+            <h6>Vista {props.views} veces</h6>
+        </div>
+    );
+}
 
 const NewsBody = props => {
     const paragraphs = props.body?.map((paragraph, index) => <p key={index}>{paragraph}</p>);

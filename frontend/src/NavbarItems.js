@@ -6,6 +6,10 @@ const loggedOutItems = [
     {
         "text": "Iniciar sesión",
         "link": "/login"
+    },
+    {
+        text: "Crear cuenta",
+        link: "/register"
     }
 ];
 

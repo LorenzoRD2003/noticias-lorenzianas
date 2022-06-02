@@ -47,6 +47,7 @@ const NewsList = () => {
                     key={item._id}
                     id={item._id}
                     image={item.image}
+                    headline={item.headline}
                     date={item.createdAt}
                 />
             ));

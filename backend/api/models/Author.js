@@ -60,11 +60,8 @@ const authorSchema = new Schema({
     },
     password: {
         type: String,
-        required: true
-    },
-    description: {
-        type: String,
-        default: ""
+        required: true,
+        select: false
     },
     news: [
         {
