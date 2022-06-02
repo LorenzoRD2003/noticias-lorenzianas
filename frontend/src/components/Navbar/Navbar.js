@@ -27,7 +27,7 @@ const NavbarList = props => {
 // Main Component
 const Navbar = props => {
     const items = props.loggedIn ? loggedInItems : loggedOutItems;
-
+    
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
             <NavbarTitle

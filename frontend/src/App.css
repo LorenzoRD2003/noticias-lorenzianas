@@ -1,4 +1,6 @@
-.mini-image {
-	width: 240px;
+.news-card {
+	width: 18rem;
 	height: auto;
+	text-decoration: none;
+	border: 1px solid #4c524e;
 }
