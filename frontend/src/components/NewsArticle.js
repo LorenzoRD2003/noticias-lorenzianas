@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import NewsService from "../services/News";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import formatDate from "../functions/formatDate";
 
 const NewsCategory = props => (
@@ -25,7 +25,9 @@ const NewsImage = props => (
 
 const NewsData = props => (
     <div>
-        <h4>Por {props.author} --- {formatDate(props.createdAt)}</h4>
+        <h4>
+            <Link to={`/author/${props.authorId}`}>Por {props.authorName}</Link> --- {formatDate(props.date)}
+        </h4>
         <h6>Vista {props.views} veces</h6>
     </div>
 );
@@ -61,7 +63,6 @@ const NewsArticle = () => {
             if (author.status === "FAILED")
                 throw new Error(news.data.error);
 
-            console.log(news.data);
             setData({
                 ...news.data,
                 ...author.data
@@ -81,7 +82,7 @@ const NewsArticle = () => {
             <NewsHeadline headline={data.headline} />
             <NewsLead lead={data.lead} />
             <NewsImage src={data.image} alt={data.headline} />
-            <NewsData author={data.username} createdAt={data.createdAt} views={data.views} />
+            <NewsData authorId={data.author} authorName={data.username} date={data.createdAt} views={data.views} />
             <NewsBody body={data.body} />
             <NewsTags tags={data.tags} />
         </>

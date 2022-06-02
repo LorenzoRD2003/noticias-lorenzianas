@@ -4,15 +4,12 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
 import Navbar from "./components/Navbar";
-import MainPage from "./components/MainPage";
+import NewsList from "./components/NewsList";
 import NewsArticle from "./components/NewsArticle";
+import AuthorPage from "./components/AuthorPage";
 
 function App() {
     const [user, setUser] = useState(null);
-
-    const onLogin = user => {
-        setUser(user);
-    }
 
     return (
         <div className="container">
@@ -23,8 +20,9 @@ function App() {
             />
             <div className="mt-3">
             <Routes>
-                <Route path="/" element={<MainPage />} />
+                <Route path="/" element={<NewsList />} />
                 <Route path="/news/:newsId" element={<NewsArticle />} />
+                <Route path="/author/:authorId" element={<AuthorPage />} />
                 <Route path="/login" />
             </Routes>
             </div>

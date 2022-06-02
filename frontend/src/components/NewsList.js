@@ -7,12 +7,12 @@ const NewsItem = props => {
     return (
         <Link
             className="card news-card"
-            to={`/news/${props.data?._id}`}
+            to={`/news/${props.id}`}
         >
-            <img className="card-img-top" src={props.data?.image} alt={props.data?.headline}/>
+            <img className="card-img-top" src={props.image} alt={props.headline} />
             <div className="card-body">
-                <h5 className="card-title">{props.data?.headline}</h5>
-                <h6 className="card-subtitle mb-2 text-muted">{formatDate(props.data?.createdAt)}</h6>
+                <h5 className="card-title">{props.headline}</h5>
+                <h6 className="card-subtitle mb-2 text-muted">{formatDate(props.date)}</h6>
             </div>
         </Link>
     );
@@ -42,7 +42,14 @@ const NewsList = () => {
             if (news.status === "FAILED")
                 throw new Error(news.data.error);
 
-            const newsItems = news.data.map(item => <NewsItem key={item._id} data={item} />);
+            const newsItems = news.data.map(item => (
+                <NewsItem
+                    key={item._id}
+                    id={item._id}
+                    image={item.image}
+                    date={item.createdAt}
+                />
+            ));
 
             setNews(newsItems);
         }
