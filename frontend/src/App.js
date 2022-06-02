@@ -1,10 +1,11 @@
 import React, {useState} from "react";
 import { Routes, Route } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "./App.css";
 
 import Navbar from "./components/Navbar/Navbar";
-
 import MainPage from "./components/MainPage";
+
 
 function App() {
     const [user, setUser] = useState(null);

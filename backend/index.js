@@ -3,6 +3,7 @@ const express = require("express");
 require("./api/database/mongoose");
 const bodyParser = require("body-parser");
 const { apiErrorHandler, api404Handler } = require("./api/modules/error-handler");
+const { setHeaders } = require("./api/modules/set-headers");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -12,6 +13,9 @@ app.use(bodyParser.json());
 
 // Listen for the connection on this port
 app.listen(PORT, () => console.log(`Corriendo en el puerto ${PORT}.`));
+
+// Set response headers
+app.use(setHeaders);
 
 // Router for the news
 const newsRouter = require("./api/routes/newsRoutes");
