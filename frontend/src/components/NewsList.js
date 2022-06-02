@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
-import NewsService from "../../services/News";
+import NewsService from "../services/News";
 import { Link } from "react-router-dom";
 
 const NewsItem = props => {
     const date = (new Date(props.data.createdAt)).toLocaleDateString("FR-CA");
     return (
         <Link
-            to={`/news/${props.data._id}`}
             className="card news-card"
+            to={`/news/${props.data._id}`}
         >
-            <img className="card-img-top" src={props.data.image} />
+            <img className="card-img-top" src={props.data.image} alt={props.data.headline}/>
             <div className="card-body">
                 <h5 className="card-title">{props.data.headline}</h5>
                 <h6 className="card-subtitle mb-2 text-muted">{date}</h6>
@@ -39,7 +39,7 @@ const NewsList = () => {
         const get = async () => {
             const news = (await NewsService.getAll()).data;
 
-            if (news.status == "FAILED")
+            if (news.status === "FAILED")
                 throw new Error(news.data.error);
 
             const newsItems = news.data.map(item => <NewsItem key={item._id} data={item} />);

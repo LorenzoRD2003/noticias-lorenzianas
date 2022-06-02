@@ -36,7 +36,7 @@ const deleteNewsArticle = async id => {
 const getNewsAuthor = async id => {
     const news = await News
         .findById(id)
-        .populate("author")
+        .populate("author", "username");
 
     return news.author;
 }

@@ -1,11 +1,11 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
-import Navbar from "./components/Navbar/Navbar";
+import Navbar from "./components/Navbar";
 import MainPage from "./components/MainPage";
-
+import NewsArticle from "./components/NewsArticle";
 
 function App() {
     const [user, setUser] = useState(null);
@@ -22,7 +22,8 @@ function App() {
                 loggedIn={Boolean(user)}
             />
             <Routes>
-                <Route path="/" element={<MainPage />}/>
+                <Route path="/" element={<MainPage />} />
+                <Route path="/news/:newsId" element={<NewsArticle />} />
                 <Route path="/login" />
             </Routes>
         </div>

@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom"
-import { loggedOutItems, loggedInItems } from "./NavbarItems";
+import { loggedOutItems, loggedInItems } from "../NavbarItems";
 
 // Navbar Title
 const NavbarTitle = props => <Link className="navbar-brand" to={props.link}>{props.title}</Link>

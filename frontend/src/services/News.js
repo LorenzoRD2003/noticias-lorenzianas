@@ -1,15 +1,24 @@
 import nodeReq from "../axios.js";
 
 class NewsService {
-    getAll() {
-        return nodeReq.get("/news");
+    getAll(limit = 12, category = "", author = "") {
+        let queryString = "/news";
+        queryString += `?limit=${limit}`;
+
+        if (category)
+            queryString += `&category=${category}`;
+        
+        if (author)
+            queryString += `&category=${author}`;
+
+        return nodeReq.get(queryString);
     }
 
     get(id) {
         return nodeReq.get(`/news/${id}`);
     }
 
-    getAuthor(id) {
+    getAuthorName(id) {
         return nodeReq.get(`/news/${id}/author`);
     }
 
