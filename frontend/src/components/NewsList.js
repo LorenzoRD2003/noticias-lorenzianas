@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from "react";
 import NewsService from "../services/News";
 import { Link } from "react-router-dom";
+import formatDate from "../functions/formatDate";
 
 const NewsItem = props => {
-    const date = (new Date(props.data.createdAt)).toLocaleDateString("FR-CA");
     return (
         <Link
             className="card news-card"
-            to={`/news/${props.data._id}`}
+            to={`/news/${props.data?._id}`}
         >
-            <img className="card-img-top" src={props.data.image} alt={props.data.headline}/>
+            <img className="card-img-top" src={props.data?.image} alt={props.data?.headline}/>
             <div className="card-body">
-                <h5 className="card-title">{props.data.headline}</h5>
-                <h6 className="card-subtitle mb-2 text-muted">{date}</h6>
+                <h5 className="card-title">{props.data?.headline}</h5>
+                <h6 className="card-subtitle mb-2 text-muted">{formatDate(props.data?.createdAt)}</h6>
             </div>
         </Link>
     );

@@ -21,11 +21,13 @@ function App() {
                 homeLink="/"
                 loggedIn={Boolean(user)}
             />
+            <div className="mt-3">
             <Routes>
                 <Route path="/" element={<MainPage />} />
                 <Route path="/news/:newsId" element={<NewsArticle />} />
                 <Route path="/login" />
             </Routes>
+            </div>
         </div>
     );
 }

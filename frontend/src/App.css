@@ -4,3 +4,8 @@
 	text-decoration: none;
 	border: 1px solid #4c524e;
 }
+
+.news-image {
+	width: 50%;
+	height: auto;
+}
