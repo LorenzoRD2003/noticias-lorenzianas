@@ -80,9 +80,12 @@ const NewsList = () => {
     }
 
     return (
-        <ul className="container mx-auto mt-4">
-            {organizeInRows(news)}
-        </ul>
+        <div>
+
+            <ul className="container mx-auto mt-4">
+                {organizeInRows(news)}
+            </ul>
+        </div>
     );
 }
 

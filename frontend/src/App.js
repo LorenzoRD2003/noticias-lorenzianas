@@ -4,9 +4,10 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
 import Navbar from "./components/Navbar";
-import NewsList from "./components/NewsList";
+import MainPage from "./components/MainPage";
 import NewsArticle from "./components/NewsArticle";
 import AuthorPage from "./components/AuthorPage";
+import RegisterForm from "./components/RegisterForm";
 
 function App() {
     const [user, setUser] = useState(null);
@@ -19,12 +20,13 @@ function App() {
                 loggedIn={Boolean(user)}
             />
             <div className="mt-3">
-            <Routes>
-                <Route path="/" element={<NewsList />} />
-                <Route path="/news/:newsId" element={<NewsArticle />} />
-                <Route path="/author/:authorId" element={<AuthorPage />} />
-                <Route path="/login" />
-            </Routes>
+                <Routes>
+                    <Route path="/" element={<MainPage />} />
+                    <Route path="/news/:newsId" element={<NewsArticle />} />
+                    <Route path="/author/:authorId" element={<AuthorPage />} />
+                    <Route path="/login" />
+                    <Route path="/register" element={<RegisterForm />} />
+                </Routes>
             </div>
         </div>
     );

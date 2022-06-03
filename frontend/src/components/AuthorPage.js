@@ -54,7 +54,6 @@ const AuthorPage = () => {
             if (author.status == "FAILED")
                 throw new Error(author.data.error);
 
-            console.log(author.data);
             setData(author.data);
         }
 
