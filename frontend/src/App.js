@@ -8,6 +8,7 @@ import MainPage from "./components/MainPage";
 import NewsArticle from "./components/NewsArticle";
 import AuthorPage from "./components/AuthorPage";
 import RegisterForm from "./components/RegisterForm";
+import LoginForm from "./components/LoginForm";
 
 function App() {
     const [user, setUser] = useState(null);
@@ -24,7 +25,7 @@ function App() {
                     <Route path="/" element={<MainPage />} />
                     <Route path="/news/:newsId" element={<NewsArticle />} />
                     <Route path="/author/:authorId" element={<AuthorPage />} />
-                    <Route path="/login" />
+                    <Route path="/login" element={<LoginForm />}/>
                     <Route path="/register" element={<RegisterForm />} />
                 </Routes>
             </div>

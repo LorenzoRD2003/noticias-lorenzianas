@@ -2,42 +2,8 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import authorValidation from "../functions/authorValidation";
 import AuthorService from "../services/Author";
+import { FormInput, FormButton, FormErrors } from "./Form";
 
-const FormInput = props => (
-    <div className="form-group my-3">
-        <label htmlFor={props.id}>
-            {props.text}
-        </label>
-        <input
-            id={props.id}
-            name={props.id}
-            type={props.type}
-            className="form-control"
-            onChange={props.onChange}
-        />
-    </div>
-);
-
-const FormButton = props => {
-    return (
-        <button
-            type="submit"
-            className="btn btn-primary"
-            disabled={props.disabled}
-        >
-            {props.text}
-        </button>
-    );
-};
-
-const FormErrors = props => {
-    const errors = props.errors.map((error, index) => <li key={index}>{error}</li>)
-    return (
-        <ul>
-            {errors}
-        </ul>
-    );
-};
 
 const RegisterForm = () => {
     const [data, setData] = useState({
@@ -72,7 +38,7 @@ const RegisterForm = () => {
         try {
             const newAuthor = (await AuthorService.create({ email, username, password })).data;
             
-            if (newAuthor.status == "FAILED")
+            if (newAuthor.status === "FAILED")
                 throw new Error(newAuthor.data.error);
 
             navigate(`/author/${newAuthor.data._id}`);

@@ -51,7 +51,7 @@ const AuthorPage = () => {
     useEffect(() => {
         const get = async () => {
             const author = (await AuthorService.get(authorId)).data;
-            if (author.status == "FAILED")
+            if (author.status === "FAILED")
                 throw new Error(author.data.error);
 
             setData(author.data);
