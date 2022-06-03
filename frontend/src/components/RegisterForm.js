@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import authorValidation from "../functions/authorValidation";
 import AuthorService from "../services/Author";
 import { FormInput, FormButton, FormErrors } from "./Form";
+import processError from "../functions/processError";
 
 
 const RegisterForm = () => {
@@ -43,7 +44,9 @@ const RegisterForm = () => {
 
             navigate(`/author/${newAuthor.data._id}`);
         } catch (err) {
-            console.log(err);
+            const processedError = processError(err);
+            setErrors(processedError.error);
+            setDisabled(false);
         }
     }
 

@@ -23,7 +23,7 @@ nodeReq.interceptors.response.use(res => {
     try {
         return res;
     } catch (err) {
-        return Promise.reject(err);
+        return Promise.reject(err.data);
     }
 }, err => Promise.reject(err));
 
