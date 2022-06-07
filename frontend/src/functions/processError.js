@@ -7,7 +7,7 @@ const processError = err => {
     return {
         status: response.status,
         statusText: response.statusText,
-        error: isArray ? errors.map(error => error.msg) : errors
+        error: isArray ? errors.map(error => error.msg) : [errors]
     }
 }
 

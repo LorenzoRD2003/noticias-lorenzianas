@@ -73,8 +73,12 @@ const login = async (req, res, next) => {
         if (!validationErrors.isEmpty())
             return next(ApiError.badRequestError(validationErrors.array()));
 
-        const loggedIn = await authorService.login(req.body.username, req.body.password);
-        res.status(200).send({ status: "OK", data: loggedIn });
+        const result = await authorService.login(req.body.username, req.body.password);
+
+        if (result.error)
+            next(ApiError.badRequestError(result.error));
+        else
+            res.status(200).send({ status: "OK", data: result });
     } catch (err) {
         next(ApiError.internalServerError(err.message));
     }

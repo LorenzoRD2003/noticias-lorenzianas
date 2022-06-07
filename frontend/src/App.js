@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Routes, Route } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
@@ -12,6 +13,12 @@ import LoginForm from "./components/LoginForm";
 
 function App() {
     const [user, setUser] = useState(null);
+    const navigate = useNavigate();
+
+    const handleLogin = user => {
+        setUser(user);
+        navigate(`/author/${user._id}`);
+    }
 
     return (
         <div className="container">
@@ -25,8 +32,8 @@ function App() {
                     <Route path="/" element={<MainPage />} />
                     <Route path="/news/:newsId" element={<NewsArticle />} />
                     <Route path="/author/:authorId" element={<AuthorPage />} />
-                    <Route path="/login" element={<LoginForm />}/>
-                    <Route path="/register" element={<RegisterForm />} />
+                    <Route path="/login" element={<LoginForm handleLogin={handleLogin} />} />
+                    <Route path="/register" element={<RegisterForm handleLogin={handleLogin} />} />
                 </Routes>
             </div>
         </div>

@@ -6,7 +6,7 @@ import { FormInput, FormButton, FormErrors } from "./Form";
 import processError from "../functions/processError";
 
 
-const RegisterForm = () => {
+const RegisterForm = props => {
     const [data, setData] = useState({
         email: "",
         username: "",
@@ -42,7 +42,7 @@ const RegisterForm = () => {
             if (newAuthor.status === "FAILED")
                 throw new Error(newAuthor.data.error);
 
-            navigate(`/author/${newAuthor.data._id}`);
+            props.handleLogin(newAuthor.data);
         } catch (err) {
             const processedError = processError(err);
             setErrors(processedError.error);

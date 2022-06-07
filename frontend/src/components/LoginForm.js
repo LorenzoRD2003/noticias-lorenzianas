@@ -1,26 +1,40 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { FormInput, FormButton } from "./Form";
+import AuthorService from "../services/Author";
+import { FormInput, FormButton, FormErrors } from "./Form";
+import processError from "../functions/processError";
 
-const LoginForm = () => {
+const LoginForm = props => {
     const [data, setData] = useState({
         username: "",
         password: ""
     });
     const [disabled, setDisabled] = useState(false);
-    const navigate = useNavigate();
+    const [errors, setErrors] = useState([]);
 
     const handleChange = event => {
         setData({
             ...data,
-            [event.target.name] : event.target.value
+            [event.target.name]: event.target.value
         })
     }
 
-    const onSubmit = event => {
+    const onSubmit = async event => {
         event.preventDefault();
         setDisabled(true);
-        console.log(data);
+        const { username, password } = data;
+
+        try {
+            const result = (await AuthorService.login({ username, password })).data;
+            
+            if (result.status === "FAILED")
+                throw new Error(result.data.error);
+
+            props.handleLogin(result.data);
+        } catch (err) {
+            const processedError = processError(err);
+            setErrors(processedError.error);
+            setDisabled(false);
+        }
     }
 
     return (
@@ -38,7 +52,8 @@ const LoginForm = () => {
                 type="password"
                 onChange={handleChange}
             />
-            <FormButton text="Ingresar" disabled={disabled}/>
+            <FormErrors errors={errors} />
+            <FormButton text="Ingresar" disabled={disabled} />
         </form>
     );
 }

@@ -44,8 +44,17 @@ const login = async (username, password) => {
     const author = await Author
         .findOne({ username: username })
         .select("+password");
+
+    if (!author)
+        return { error: "El nombre de usuario ingresado no existe." }
+
+    const result = await bcrypt.compare(password, author.password);
     
-    return await bcrypt.compare(password, author.password);
+    if (result) {
+        delete author.password;
+        return author;
+    } else
+        return { error: "La contraseña es incorrecta." }
 }
 
 
