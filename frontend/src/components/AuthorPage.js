@@ -37,12 +37,34 @@ const AuthorNewsList = props => {
     return (
         <div>
             <h3>Noticias escritas por el autor</h3>
-            <ul>
-                {news}
-            </ul>
+            {props.news && props.news?.length > 0 ?
+                <ul>
+                    {news}
+                </ul> :
+                <h6>¡Este autor aún no tiene noticias escritas!</h6>
+            }
         </div>
     );
 }
+
+const AuthorConfig = props => (
+    <div>
+        <h3>Panel de usuario</h3>
+        <div className="row">
+            <div className="col-md-4 text-center">
+                <Link to={"/publish"} className="btn btn-primary">
+                    Escribir una noticia
+                </Link>
+            </div>
+            <div className="col-md-4 text-center">
+                <button className="btn btn-secondary">Actualizar contraseña</button>
+            </div>
+            <div className="col-md-4 text-center">
+                <button className="btn btn-danger">Borrar cuenta</button>
+            </div>
+        </div>
+    </div>
+);
 
 const AuthorPage = ({ user }) => {
     const [data, setData] = useState({});
@@ -58,7 +80,6 @@ const AuthorPage = ({ user }) => {
         }
 
         try {
-            console.log(user);
             get();
         } catch (err) {
             console.log(err);
@@ -74,6 +95,10 @@ const AuthorPage = ({ user }) => {
                 date={data.createdAt}
             />
             <AuthorNewsList news={data.news} />
+            {user._id === data._id ?
+                <AuthorConfig /> :
+                <></>
+            }
         </>
     );
 }
