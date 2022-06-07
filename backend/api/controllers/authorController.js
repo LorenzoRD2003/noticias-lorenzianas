@@ -35,7 +35,13 @@ const createAuthor = async (req, res, next) => {
             return next(ApiError.badRequestError(validationErrors.array()));
 
         const createdAuthor = await authorService.createAuthor(req.body);
-        res.status(201).send({ status: "OK", data: createdAuthor });
+        res.status(201).send({
+            status: "OK",
+            data: {
+                token: "test-token",
+                author: createdAuthor
+            }
+        });
     } catch (err) {
         next(ApiError.internalServerError(err.message));
     }
@@ -78,7 +84,13 @@ const login = async (req, res, next) => {
         if (result.error)
             next(ApiError.badRequestError(result.error));
         else
-            res.status(200).send({ status: "OK", data: result });
+            res.status(200).send({
+                status: "OK",
+                data: {
+                    token: "test-token",
+                    author: result
+                }
+            });
     } catch (err) {
         next(ApiError.internalServerError(err.message));
     }

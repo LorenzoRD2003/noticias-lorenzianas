@@ -1,15 +1,21 @@
 import React, { useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import AuthorService from "../services/Author";
 import { FormInput, FormButton, FormErrors } from "./Form";
 import processError from "../functions/processError";
 
-const LoginForm = props => {
+const LoginForm = ({ setToken, setUser }) => {
     const [data, setData] = useState({
         username: "",
         password: ""
     });
     const [disabled, setDisabled] = useState(false);
     const [errors, setErrors] = useState([]);
+
+    const navigate = useNavigate();
+
+    const location = useLocation();
+    const previousPage = location.state?.from?.pathname || "/";
 
     const handleChange = event => {
         setData({
@@ -29,7 +35,9 @@ const LoginForm = props => {
             if (result.status === "FAILED")
                 throw new Error(result.data.error);
 
-            props.handleLogin(result.data);
+            setToken(result.data.token);
+            setUser(result.data.author);
+            navigate(previousPage, { replace: true });
         } catch (err) {
             const processedError = processError(err);
             setErrors(processedError.error);

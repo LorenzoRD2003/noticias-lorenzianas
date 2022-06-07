@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import authorValidation from "../functions/authorValidation";
 import AuthorService from "../services/Author";
 import { FormInput, FormButton, FormErrors } from "./Form";
 import processError from "../functions/processError";
 
 
-const RegisterForm = props => {
+const RegisterForm = ({ setToken, setUser }) => {
     const [data, setData] = useState({
         email: "",
         username: "",
@@ -15,7 +15,11 @@ const RegisterForm = props => {
     });
     const [errors, setErrors] = useState([]);
     const [disabled, setDisabled] = useState(false);
+
     const navigate = useNavigate();
+    
+    const location = useLocation();
+    const previousPage = location.state?.from?.pathname || "/";
 
     const handleChange = event => {
         setData({
@@ -42,7 +46,9 @@ const RegisterForm = props => {
             if (newAuthor.status === "FAILED")
                 throw new Error(newAuthor.data.error);
 
-            props.handleLogin(newAuthor.data);
+            setToken(newAuthor.data.token);
+            setUser(newAuthor.data.author);
+            navigate(previousPage, { replace: true });
         } catch (err) {
             const processedError = processError(err);
             setErrors(processedError.error);
