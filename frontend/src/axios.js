@@ -8,7 +8,8 @@ const nodeReq = axios.create({
     },
     timeout: 20000,
     responseEncoding: "utf-8",
-    responseType: "text"
+    responseType: "text",
+    withCredentials: true
 });
 
 nodeReq.interceptors.request.use(req => {

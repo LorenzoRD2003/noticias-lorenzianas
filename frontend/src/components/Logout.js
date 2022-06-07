@@ -1,13 +1,21 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router";
+import AuthorService from "../services/Author";
 
-const Logout = ({ setToken, setAuthor }) => {
+const Logout = ({ setToken, setUser }) => {
     const navigate = useNavigate();
-    
+
     useEffect(() => {
-        setToken(null);
-        setAuthor({});
-        navigate("/", { replace: true });
+        try {
+            const logout = async () => await AuthorService.logout();
+
+            setToken(null);
+            setUser({});
+            logout();
+            navigate("/", { replace: true });
+        } catch (err) {
+            console.log(err);
+        }
     });
 
     return (

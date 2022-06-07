@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
+
+import AuthorService from "./services/Author";
 
 import Navbar from "./components/Navbar";
 import MainPage from "./components/MainPage";
@@ -14,6 +16,21 @@ import Logout from "./components/Logout";
 function App() {
     const [token, setToken] = useState(null);
     const [user, setUser] = useState({});
+
+    useEffect(() => {
+        const get = async () => {
+            const session = await AuthorService.session();
+            setToken(session.data?.token);
+            setUser(session.data?.user);
+        }
+        if (!token) {
+            try {
+                get();
+            } catch (err) {
+                console.log(err);
+            }
+        }
+    });
 
     return (
         <div className="container">

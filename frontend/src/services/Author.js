@@ -21,8 +21,16 @@ class AuthorService {
         return nodeReq.delete(`/author/${id}`);
     }
 
+    session() {
+        return nodeReq.get("/author/session");
+    }
+
     login(data) {
         return nodeReq.post("/author/login", data);
+    }
+
+    logout() {
+        return nodeReq.get("/author/logout");
     }
 }
 
