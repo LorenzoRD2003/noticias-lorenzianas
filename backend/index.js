@@ -3,6 +3,10 @@ require("dotenv").config();
 const express = require("express");
 const app = express();
 
+// Use helmet module
+const helmet = require("helmet");
+app.use(helmet());
+
 // Use body-parser module
 const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: false }));

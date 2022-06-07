@@ -80,7 +80,7 @@ const login = async (req, res, next) => {
             return next(ApiError.badRequestError(validationErrors.array()));
 
         const result = await authorService.login(req.body.username, req.body.password);
-
+        console.log(req.session);
         if (result.error)
             next(ApiError.badRequestError(result.error));
         else
