@@ -51,7 +51,7 @@ const login = async (username, password) => {
     const result = await bcrypt.compare(password, author.password);
     
     if (result) {
-        delete author.password;
+        author.password = "";
         return author;
     } else
         return { error: "La contraseña es incorrecta." }
