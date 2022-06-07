@@ -1,4 +1,5 @@
 const Author = require('../models/Author');
+const bcrypt = require('bcrypt');
 
 const getAllAuthors = async (limit, sortBy) => {
     return await Author
@@ -8,14 +9,12 @@ const getAllAuthors = async (limit, sortBy) => {
 }
 
 const getAuthor = async id => {
-    const options = { sort: "-createdAt" };
-
     return await Author
         .findById(id)
         .populate({
             path: "news",
             select: "_id headline createdAt",
-            options
+            options: { sort: "-createdAt" }
         });
 }
 
@@ -41,6 +40,14 @@ const usernameAlreadyAdded = async username => {
     return Boolean(result);
 }
 
+const login = async (username, password) => {
+    const author = await Author
+        .findOne({ username: username })
+        .select("+password");
+    
+    return await bcrypt.compare(password, author.password);
+}
+
 
 module.exports = {
     getAllAuthors,
@@ -49,5 +56,6 @@ module.exports = {
     updateAuthor,
     deleteAuthor,
     emailAlreadyAdded,
-    usernameAlreadyAdded
+    usernameAlreadyAdded,
+    login
 }

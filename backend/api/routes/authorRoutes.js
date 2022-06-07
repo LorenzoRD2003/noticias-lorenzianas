@@ -315,4 +315,6 @@ router.put("/:authorId", authorValidators.updateAuthorValidator, authorControlle
  */
 router.delete("/:authorId", authorValidators.deleteAuthorValidator, authorController.deleteAuthor);
 
+router.post("/login", authorValidators.loginValidator, authorController.login);
+
 module.exports = router;

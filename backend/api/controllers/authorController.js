@@ -65,7 +65,19 @@ const deleteAuthor = async (req, res, next) => {
     } catch (err) {
         next(ApiError.internalServerError(err.message));
     }
+}
 
+const login = async (req, res, next) => {
+    try {
+        const validationErrors = validationResult(req);
+        if (!validationErrors.isEmpty())
+            return next(ApiError.badRequestError(validationErrors.array()));
+
+        const loggedIn = await authorService.login(req.body.username, req.body.password);
+        res.status(200).send({ status: "OK", data: loggedIn });
+    } catch (err) {
+        next(ApiError.internalServerError(err.message));
+    }
 }
 
 module.exports = {
@@ -73,5 +85,6 @@ module.exports = {
     getAuthor,
     createAuthor,
     updateAuthorPassword,
-    deleteAuthor
+    deleteAuthor,
+    login
 };

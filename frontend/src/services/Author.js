@@ -20,6 +20,10 @@ class AuthorService {
     delete(id) {
         return nodeReq.delete(`/author/${id}`);
     }
+
+    login(data) {
+        return nodeReq.post("/author/login", data);
+    }
 }
 
 export default new AuthorService();
