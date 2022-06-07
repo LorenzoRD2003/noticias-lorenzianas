@@ -61,6 +61,10 @@ router.get("/", authorController.getAllAuthors);
 
 router.get("/session", authorController.getSession);
 
+router.post("/login", authorValidators.loginValidator, authorController.login);
+
+router.get("/logout", authorController.logout);
+
 /**
  * @openapi
  * /author/{authorId}:
@@ -316,7 +320,5 @@ router.put("/:authorId", authorValidators.updateAuthorValidator, authorControlle
  *                       example: "An error occured in the server."
  */
 router.delete("/:authorId", authorValidators.deleteAuthorValidator, authorController.deleteAuthor);
-
-router.post("/login", authorValidators.loginValidator, authorController.login);
 
 module.exports = router;

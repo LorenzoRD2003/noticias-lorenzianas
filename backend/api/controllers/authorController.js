@@ -79,6 +79,18 @@ const deleteAuthor = async (req, res, next) => {
     }
 }
 
+// Check if already logged in
+const getSession = (req, res, next) => {
+    try {
+        res.send({
+            token: req.session.token,
+            user: req.session.user
+        });
+    } catch (err) {
+        next(ApiError.internalServerError(err.message));
+    }
+}
+
 const login = async (req, res, next) => {
     try {
         const validationErrors = validationResult(req);
@@ -107,14 +119,14 @@ const login = async (req, res, next) => {
     }
 }
 
-// Check if already logged in
-const getSession = (req, res, next) => {
+const logout = (req, res, next) => {
     try {
-        res.send({
-            token: req.session.token,
-            user: req.session.user
-        });
-    } catch (err) {
+        delete req.session.token;
+        delete req.session.user;
+        req.session.save();
+
+        res.sendStatus(204);
+    } catch(err) {
         next(ApiError.internalServerError(err.message));
     }
 }
@@ -125,6 +137,7 @@ module.exports = {
     createAuthor,
     updateAuthorPassword,
     deleteAuthor,
+    getSession,
     login,
-    getSession
+    logout
 };

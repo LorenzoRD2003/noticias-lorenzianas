@@ -19,7 +19,7 @@ app.use(session({
     secret: SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
-    cookie: { maxAge: 60000 } // 1 minute
+    cookie: { maxAge: 15 * 60 * 1000 } // 15 minute
 }));
 
 // Connect to the database
