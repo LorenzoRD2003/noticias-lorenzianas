@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
@@ -20,8 +20,11 @@ function App() {
     useEffect(() => {
         const get = async () => {
             const session = await AuthorService.session();
-            setToken(session.data?.token);
-            setUser(session.data?.user);
+
+            if (Object.keys(session.data).length) {
+                setToken(session.data.token);
+                setUser(session.data.user);
+            }
         }
         if (!token) {
             try {
@@ -51,8 +54,7 @@ function App() {
                     />
                     <Route
                         path="/author/:authorId"
-                        element={<AuthorPage />}
-                        user={user}
+                        element={<AuthorPage user={user} />}
                     />
                     <Route
                         path="/login"
@@ -65,6 +67,10 @@ function App() {
                     <Route
                         path="/logout"
                         element={<Logout setToken={setToken} setUser={setUser} />}
+                    />
+                    <Route
+                        path="/profile"
+                        element={<Navigate to={`/author/${user?._id}`} replace={true} />}
                     />
                 </Routes>
             </main>

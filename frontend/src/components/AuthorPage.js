@@ -44,7 +44,7 @@ const AuthorNewsList = props => {
     );
 }
 
-const AuthorPage = () => {
+const AuthorPage = ({ user }) => {
     const [data, setData] = useState({});
     const { authorId } = useParams();
 
@@ -58,6 +58,7 @@ const AuthorPage = () => {
         }
 
         try {
+            console.log(user);
             get();
         } catch (err) {
             console.log(err);

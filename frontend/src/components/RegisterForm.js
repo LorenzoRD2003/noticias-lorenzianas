@@ -47,7 +47,7 @@ const RegisterForm = ({ setToken, setUser }) => {
                 throw new Error(newAuthor.data.error);
 
             setToken(newAuthor.data.token);
-            setUser(newAuthor.data.author);
+            setUser(newAuthor.data.user);
             navigate(previousPage, { replace: true });
         } catch (err) {
             const processedError = processError(err);

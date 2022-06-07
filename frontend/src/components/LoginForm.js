@@ -36,7 +36,7 @@ const LoginForm = ({ setToken, setUser }) => {
                 throw new Error(result.data.error);
 
             setToken(result.data.token);
-            setUser(result.data.author);
+            setUser(result.data.user);
             navigate(previousPage, { replace: true });
         } catch (err) {
             const processedError = processError(err);

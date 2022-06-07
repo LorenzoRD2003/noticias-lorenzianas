@@ -7,12 +7,12 @@ const Logout = ({ setToken, setUser }) => {
 
     useEffect(() => {
         try {
-            const logout = async () => await AuthorService.logout();
-
-            setToken(null);
-            setUser({});
-            logout();
-            navigate("/", { replace: true });
+            (async () => {
+                setToken(null);
+                setUser({});
+                await AuthorService.logout();
+                navigate("/", { replace: true });
+            })();
         } catch (err) {
             console.log(err);
         }
