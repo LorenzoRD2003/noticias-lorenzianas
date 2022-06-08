@@ -13,8 +13,8 @@ class AuthorService {
         return nodeReq.post("/author", data);
     }
 
-    updatePassword(data) {
-        return nodeReq.put("/author", data);
+    updatePassword(id, data) {
+        return nodeReq.put(`/author/${id}`, data);
     }
 
     delete(id) {

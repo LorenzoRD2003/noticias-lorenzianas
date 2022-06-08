@@ -61,7 +61,7 @@ const authorSchema = new Schema({
     password: {
         type: String,
         required: true,
-        select: false
+        
     },
     news: [
         {
