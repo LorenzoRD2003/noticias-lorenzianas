@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { FormInput, FormButton, FormErrors } from "./Form";
 
+import processError from "../functions/processError";
 import NewsService from "../services/News";
 
 const Paragraph = props => {
@@ -104,12 +105,14 @@ const Publish = props => {
         try {
             const result = (await NewsService.create(data)).data;
 
-            if (result.status == "FAILED")
+            if (result.status === "FAILED")
                 throw new Error(result.data.error);
             
             navigate("/profile");
         } catch(err) {
-            console.log(err);
+            const processedError = processError(err);
+            setErrors(processedError.error);
+            setDisabled(false);
         }
     }
 

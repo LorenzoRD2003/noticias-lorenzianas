@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
-import AuthorService from "../services/Author";
 import { Link, useParams, useNavigate } from "react-router-dom";
-import formatDate from "../functions/formatDate";
 import { FormInput, FormButton, FormErrors } from "./Form";
+
+import formatDate from "../functions/formatDate";
 import processError from "../functions/processError";
+
+import NewsService from "../services/News";
+import AuthorService from "../services/Author";
 
 const AuthorTitle = props => (
     <h1>Información sobre {props.username}</h1>
@@ -23,16 +26,23 @@ const AuthorNews = props => (
             {props.headline}
         </Link>
         ({formatDate(props.date)})
+        <button
+            className="mx-2 btn btn-danger btn-sm"
+            onClick={props.onDelete}
+        >
+            Borrar noticia
+        </button>
     </li>
 );
 
 const AuthorNewsList = props => {
-    const news = props.news?.map((item, index) => (
+    const news = props.news?.map(item => (
         <AuthorNews
-            key={index}
+            key={item._id}
             id={item._id}
             headline={item.headline}
             date={item.createdAt}
+            onDelete={() => props.onDelete(item._id)}
         />
     ));
 
@@ -142,6 +152,7 @@ const UpdatePasswordForm = props => {
 
 const AuthorPage = props => {
     const [data, setData] = useState({});
+    const [update, setUpdate] = useState(0);
     const { authorId } = useParams();
 
     useEffect(() => {
@@ -158,7 +169,20 @@ const AuthorPage = props => {
         } catch (err) {
             console.log(err);
         }
-    }, [authorId]);
+    }, [update]);
+
+    const deleteNews = async id => {
+        try {
+            let answer = window.confirm("¿Seguro que quiere borrar la noticia?");
+            if (!answer)
+                return;
+
+            await NewsService.delete(id);
+            setUpdate(update => update + 1);         
+        } catch (err) {
+            console.log(err);
+        }
+    }
 
     return (
         <>
@@ -168,7 +192,7 @@ const AuthorPage = props => {
                 email={data.email}
                 date={data.createdAt}
             />
-            <AuthorNewsList news={data.news} />
+            <AuthorNewsList news={data.news} onDelete={deleteNews} />
             {props.user._id === data._id ?
                 <AuthorConfig id={props.user._id} /> :
                 <></>
