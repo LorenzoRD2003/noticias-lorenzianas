@@ -51,10 +51,24 @@ const AuthorNewsList = props => {
 
 const AuthorConfig = props => {
     const [showUpdatePassword, setShowUpdatePassword] = useState(false);
+    const navigate = useNavigate();
 
-    const handleClick = event => {
+    const handleUpdate = event => {
         event.target.disabled = true;
         setShowUpdatePassword(true);
+    }
+
+    const handleDelete = async () => {
+        let answer = window.confirm("¿Seguro que quiere borrar su cuenta?");
+        if (!answer)
+            return;
+
+        try {
+            await AuthorService.delete(props.id);
+            navigate("/logout");
+        } catch (err) {
+            console.log(err);
+        }
     }
 
     return (
@@ -67,10 +81,10 @@ const AuthorConfig = props => {
                     </Link>
                 </div>
                 <div className="col-md-4 text-center">
-                    <button className="btn btn-secondary" onClick={handleClick}>Actualizar contraseña</button>
+                    <button className="btn btn-secondary" onClick={handleUpdate}>Actualizar contraseña</button>
                 </div>
                 <div className="col-md-4 text-center">
-                    <button className="btn btn-danger">Borrar cuenta</button>
+                    <button className="btn btn-danger" onClick={handleDelete}>Borrar cuenta</button>
                 </div>
             </div>
             {showUpdatePassword ?
@@ -100,12 +114,12 @@ const UpdatePasswordForm = props => {
 
         try {
             const result = (await AuthorService.updatePassword(props.id, data)).data;
-            
+
             if (result.status === "FAILED")
                 throw new Error(result.data.error);
-            
+
             navigate("/");
-        } catch(err) {
+        } catch (err) {
             const processedError = processError(err);
             setErrors(processedError.error);
             setDisabled(false);

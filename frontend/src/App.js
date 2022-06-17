@@ -12,6 +12,7 @@ import AuthorPage from "./components/AuthorPage";
 import RegisterForm from "./components/RegisterForm";
 import LoginForm from "./components/LoginForm";
 import Logout from "./components/Logout";
+import Publish from "./components/Publish";
 
 function App() {
     const [token, setToken] = useState(null);
@@ -33,10 +34,10 @@ function App() {
                 console.log(err);
             }
         }
-    });
+    }, [token]);
 
     return (
-        <div className="container">
+        <div className="container mb-3">
             <Navbar
                 title="Agencia de Noticias Lorenzianas"
                 homeLink="/"
@@ -71,6 +72,10 @@ function App() {
                     <Route
                         path="/profile"
                         element={<Navigate to={`/author/${user?._id}`} replace={true} />}
+                    />
+                    <Route
+                        path="/publish"
+                        element={token ? <Publish user={user} /> : <Navigate to="/" replace={true} />}
                     />
                 </Routes>
             </main>

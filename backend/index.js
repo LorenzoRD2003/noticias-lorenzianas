@@ -23,30 +23,30 @@ app.use(session({
 }));
 
 // Connect to the database
-require("./api/database/mongoose");
+require("./database/mongoose");
 
 // Listen for the connection on this port
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Corriendo en el puerto ${PORT}.`));
 
 // Set response headers
-const { setHeaders } = require("./api/modules/set-headers");
+const { setHeaders } = require("./modules/set-headers");
 app.use(setHeaders);
 
 // Router for the news
-const newsRouter = require("./api/routes/newsRoutes");
+const newsRouter = require("./routes/newsRoutes");
 app.use("/news", newsRouter);
 
 // Router for the authors
-const authorRouter = require("./api/routes/authorRoutes");
+const authorRouter = require("./routes/authorRoutes");
 app.use("/author", authorRouter);
 
 // Router for the documentation
-const { router: docsRouter } = require("./api/modules/swagger");
+const { router: docsRouter } = require("./modules/swagger");
 app.use("/api", docsRouter);
 
 // Finally, check for errors and for 404
-const { apiErrorHandler, api404Handler } = require("./api/modules/error-handler");
+const { apiErrorHandler, api404Handler } = require("./modules/error-handler");
 app.use(apiErrorHandler);
 app.use(api404Handler);
 

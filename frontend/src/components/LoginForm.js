@@ -24,7 +24,7 @@ const LoginForm = ({ setToken, setUser }) => {
         })
     }
 
-    const onSubmit = async event => {
+    const handleSubmit = async event => {
         event.preventDefault();
         setDisabled(true);
         const { username, password } = data;
@@ -46,7 +46,7 @@ const LoginForm = ({ setToken, setUser }) => {
     }
 
     return (
-        <form className="col-lg-6 col-md-6 col-sm-12" onSubmit={onSubmit}>
+        <form className="col-lg-6 col-md-6 col-sm-12" onSubmit={handleSubmit}>
             <h1>Iniciar sesión</h1>
             <FormInput
                 id="username"
