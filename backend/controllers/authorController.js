@@ -23,6 +23,9 @@ const getAuthor = async (req, res, next) => {
             return next(ApiError.badRequestError(validationErrors.array()));
 
         const author = await authorService.getAuthor(req.params.authorId);
+        if (!author)
+            return next();
+
         res.status(200).send({ status: "OK", data: author });
     } catch (err) {
         next(ApiError.internalServerError(err.message));

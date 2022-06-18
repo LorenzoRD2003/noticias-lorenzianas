@@ -154,22 +154,23 @@ const AuthorPage = props => {
     const [data, setData] = useState({});
     const [update, setUpdate] = useState(0);
     const { authorId } = useParams();
+    const navigate = useNavigate();
 
     useEffect(() => {
-        const get = async () => {
-            const author = (await AuthorService.get(authorId)).data;
-            if (author.status === "FAILED")
-                throw new Error(author.data.error);
+        // Get author data
+        (async () => {
+            try {
+                const author = (await AuthorService.get(authorId)).data;
+                if (author.status === "FAILED")
+                    throw new Error(author.data.error);
 
-            setData(author.data);
-        }
-
-        try {
-            get();
-        } catch (err) {
-            console.log(err);
-        }
-    }, [update]);
+                setData(author.data);
+            } catch (err) {
+                props.setError(processError(err));
+                navigate("/error", { replace: true });
+            }
+        })();
+    }, [authorId, update]);
 
     const deleteNews = async id => {
         try {
@@ -178,7 +179,7 @@ const AuthorPage = props => {
                 return;
 
             await NewsService.delete(id);
-            setUpdate(update => update + 1);         
+            setUpdate(update => update + 1);
         } catch (err) {
             console.log(err);
         }
@@ -193,8 +194,8 @@ const AuthorPage = props => {
                 date={data.createdAt}
             />
             <AuthorNewsList news={data.news} onDelete={deleteNews} />
-            {props.user._id === data._id ?
-                <AuthorConfig id={props.user._id} /> :
+            {props.user._id === authorId ?
+                <AuthorConfig id={authorId} /> :
                 <></>
             }
         </>

@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
-import NewsService from "../services/News";
 import { Link, useParams } from "react-router-dom";
+
+import NewsService from "../services/News";
 import formatDate from "../functions/formatDate";
+import processError from "../functions/processError";
 
 const NewsCategory = props => (
     <h6>{props.category?.toUpperCase()}</h6>
@@ -53,32 +55,30 @@ const NewsTags = props => {
     );
 }
 
-const NewsArticle = () => {
+const NewsArticle = props => {
     const [data, setData] = useState({});
     let { newsId } = useParams();
 
     useEffect(() => {
-        const get = async () => {
-            const news = (await NewsService.get(newsId)).data;
-            if (news.status === "FAILED")
-                throw new Error(news.data.error);
+        (async () => {
+            try {
+                const news = (await NewsService.get(newsId)).data;
+                if (news.status === "FAILED")
+                    throw new Error(news.data.error);
 
-            const author = (await NewsService.getAuthorName(newsId)).data;
-            if (author.status === "FAILED")
-                throw new Error(news.data.error);
+                const author = (await NewsService.getAuthorName(newsId)).data;
+                if (author.status === "FAILED")
+                    throw new Error(news.data.error);
 
-            setData({
-                ...news.data,
-                ...author.data
-            });
-        }
-
-        try {
-            get();
-        } catch (err) {
-            console.log(err);
-        }
-    }, [newsId]);
+                setData({
+                    ...news.data,
+                    ...author.data
+                });
+            } catch (err) {
+                props.setError(processError(err));
+            }
+        })();
+    }, []);
 
     return (
         <>

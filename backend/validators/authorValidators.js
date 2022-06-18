@@ -6,6 +6,8 @@ const getAuthorValidator = [
         .trim()
         .exists()
         .withMessage("AuthorID is required.")
+        .isMongoId()
+        .withMessage("The required resource was not found.")
 ];
 
 const createAuthorValidator = [
@@ -55,7 +57,9 @@ const updateAuthorValidator = [
     param("authorId")
         .trim()
         .exists()
-        .withMessage("AuthorID is required."),
+        .withMessage("AuthorID is required.")
+        .isMongoId()
+        .withMessage("The required resource was not found."),
     // New password must have at least 8 characters
     body("newPassword")
         .trim()
@@ -72,6 +76,8 @@ const deleteAuthorValidator = [
         .trim()
         .exists()
         .withMessage("AuthorID is required.")
+        .isMongoId()
+        .withMessage("The required resource was not found.")
 ];
 
 const loginValidator = [

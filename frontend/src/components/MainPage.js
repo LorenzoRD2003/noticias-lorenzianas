@@ -5,11 +5,11 @@ const PageTitle = () => (
     <h1>Noticias recientes</h1>
 );
 
-const MainPage = () => {
+const MainPage = ({ setError }) => {
     return (
         <div>
             <PageTitle />
-            <NewsList />
+            <NewsList setError={setError} />
         </div>
     );
 }

@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
-import NewsService from "../services/News";
 import { Link } from "react-router-dom";
+
+import NewsService from "../services/News";
 import formatDate from "../functions/formatDate";
+import processError from "../functions/processError";
 
 const NewsItem = props => {
     return (
@@ -32,34 +34,32 @@ const NewsRow = props => (
     </div>
 );
 
-const NewsList = () => {
+const NewsList = props => {
     const [news, setNews] = useState([]);
 
     useEffect(() => {
-        const get = async () => {
-            const news = (await NewsService.getAll()).data;
+        (async () => {
+            try {
+                const news = (await NewsService.getAll()).data;
 
-            if (news.status === "FAILED")
-                throw new Error(news.data.error);
+                if (news.status === "FAILED")
+                    throw new Error(news.data.error);
 
-            const newsItems = news.data.map(item => (
-                <NewsItem
-                    key={item._id}
-                    id={item._id}
-                    image={item.image}
-                    headline={item.headline}
-                    date={item.createdAt}
-                />
-            ));
+                const newsItems = news.data.map(item => (
+                    <NewsItem
+                        key={item._id}
+                        id={item._id}
+                        image={item.image}
+                        headline={item.headline}
+                        date={item.createdAt}
+                    />
+                ));
 
-            setNews(newsItems);
-        }
-
-        try {
-            get();
-        } catch (err) {
-            console.log(err);
-        }
+                setNews(newsItems);
+            } catch (err) {
+                props.setError(processError(err));
+            }
+        })();
     }, []);
 
     // Organize the news in rows of three elements
@@ -81,7 +81,6 @@ const NewsList = () => {
 
     return (
         <div>
-
             <ul className="container mx-auto mt-4">
                 {organizeInRows(news)}
             </ul>

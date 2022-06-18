@@ -13,10 +13,12 @@ import RegisterForm from "./components/RegisterForm";
 import LoginForm from "./components/LoginForm";
 import Logout from "./components/Logout";
 import Publish from "./components/Publish";
+import Error from "./components/Error";
 
 function App() {
     const [token, setToken] = useState(null);
     const [user, setUser] = useState({});
+    const [error, setError] = useState([]);
 
     useEffect(() => {
         const get = async () => {
@@ -47,15 +49,15 @@ function App() {
                 <Routes>
                     <Route
                         path="/"
-                        element={<MainPage />}
+                        element={<MainPage setError={setError} />}
                     />
                     <Route
                         path="/news/:newsId"
-                        element={<NewsArticle />}
+                        element={<NewsArticle setError={error} />}
                     />
                     <Route
                         path="/author/:authorId"
-                        element={<AuthorPage user={user} />}
+                        element={<AuthorPage user={user} setError={setError} />}
                     />
                     <Route
                         path="/login"
@@ -76,6 +78,10 @@ function App() {
                     <Route
                         path="/publish"
                         element={token ? <Publish user={user} /> : <Navigate to="/" replace={true} />}
+                    />
+                    <Route
+                        path="/error"
+                        element={<Error error={error} />}
                     />
                 </Routes>
             </main>

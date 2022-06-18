@@ -27,6 +27,9 @@ const getNewsArticle = async (req, res, next) => {
             return next(ApiError.badRequestError(validationErrors.array()));
 
         const newsArticle = await newsService.getNewsArticle(req.params.newsId);
+        if (!newsArticle)
+            return next();
+
         res.status(200).send({ status: "OK", data: newsArticle });
     } catch (err) {
         next(ApiError.internalServerError(err.message));

@@ -6,6 +6,8 @@ const getNewsArticleValidator = [
         .trim()
         .exists()
         .withMessage("NewsID param is required.")
+        .isMongoId()
+        .withMessage("The required resource was not found.")
 ];
 
 const createNewsArticleValidator = [
@@ -44,6 +46,8 @@ const updateNewsArticleValidator = [
         .trim()
         .exists()
         .withMessage("NewsID param is required.")
+        .isMongoId()
+        .withMessage("The required resource was not found.")
 ];
 
 const deleteNewsArticleValidator = [
@@ -51,6 +55,8 @@ const deleteNewsArticleValidator = [
         .trim()
         .exists()
         .withMessage("NewsID param is required.")
+        .isMongoId()
+        .withMessage("The required resource was not found.")
 ];
 
 module.exports = {
