@@ -34,14 +34,14 @@ const NewsRow = props => (
     </div>
 );
 
-const NewsList = ({ setError }) => {
+const NewsList = ({ category, setError }) => {
     const [news, setNews] = useState([]);
     const navigate = useNavigate();
 
     useEffect(() => {
         (async () => {
             try {
-                const news = (await NewsService.getAll()).data;
+                const news = (await NewsService.getAll(100, category)).data;
 
                 if (news.status === "FAILED")
                     throw new Error(news.data.error);
@@ -62,7 +62,7 @@ const NewsList = ({ setError }) => {
                 navigate("/error", { replace: true });
             }
         })();
-    }, [navigate, setError]);
+    }, [navigate, category, setError]);
 
     // Organize the news in rows of three elements
     const organizeInRows = () => {
