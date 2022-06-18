@@ -26,12 +26,17 @@ const AuthorNews = props => (
             {props.headline}
         </Link>
         ({formatDate(props.date)})
-        <button
-            className="mx-2 btn btn-danger btn-sm"
-            onClick={props.onDelete}
-        >
-            Borrar noticia
-        </button>
+        {props.isLoggedIn ?
+            <>
+                <button
+                    className="mx-2 btn btn-danger btn-sm"
+                    onClick={props.onDelete}
+                >
+                    Borrar noticia
+                </button>
+            </> :
+            <></>
+        }
     </li>
 );
 
@@ -42,6 +47,7 @@ const AuthorNewsList = props => {
             id={item._id}
             headline={item.headline}
             date={item.createdAt}
+            isLoggedIn={props.isLoggedIn}
             onDelete={() => props.onDelete(item._id)}
         />
     ));
@@ -150,10 +156,10 @@ const UpdatePasswordForm = props => {
     );
 }
 
-const AuthorPage = props => {
+const AuthorPage = ({ user, setError }) => {
+    const { authorId } = useParams();
     const [data, setData] = useState({});
     const [update, setUpdate] = useState(0);
-    const { authorId } = useParams();
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -164,13 +170,16 @@ const AuthorPage = props => {
                 if (author.status === "FAILED")
                     throw new Error(author.data.error);
 
-                setData(author.data);
+                setData({
+                    isLoggedIn: user._id === authorId,
+                    ...author.data
+                });
             } catch (err) {
-                props.setError(processError(err));
+                setError(processError(err));
                 navigate("/error", { replace: true });
             }
         })();
-    }, [authorId, update]);
+    }, [authorId, user, navigate, update, setError]);
 
     const deleteNews = async id => {
         try {
@@ -193,8 +202,8 @@ const AuthorPage = props => {
                 email={data.email}
                 date={data.createdAt}
             />
-            <AuthorNewsList news={data.news} onDelete={deleteNews} />
-            {props.user._id === authorId ?
+            <AuthorNewsList news={data.news} onDelete={deleteNews} isLoggedIn={data.isLoggedIn} />
+            {data.isLoggedIn ?
                 <AuthorConfig id={authorId} /> :
                 <></>
             }

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 
 import NewsService from "../services/News";
 import formatDate from "../functions/formatDate";
@@ -55,9 +55,10 @@ const NewsTags = props => {
     );
 }
 
-const NewsArticle = props => {
+const NewsArticle = ({ setError }) => {
     const [data, setData] = useState({});
-    let { newsId } = useParams();
+    const { newsId } = useParams();
+    const navigate = useNavigate();
 
     useEffect(() => {
         (async () => {
@@ -75,10 +76,11 @@ const NewsArticle = props => {
                     ...author.data
                 });
             } catch (err) {
-                props.setError(processError(err));
+                setError(processError(err));
+                navigate("/error", { replace: true });
             }
         })();
-    }, []);
+    }, [newsId, navigate, setError]);
 
     return (
         <>

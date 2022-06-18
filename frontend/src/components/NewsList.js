@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import NewsService from "../services/News";
 import formatDate from "../functions/formatDate";
@@ -21,7 +21,7 @@ const NewsItem = props => {
 }
 
 const NewsRow = props => (
-    <div className="row">
+    <div className="row mb-3">
         <div className="col-md-4">
             {props.first}
         </div>
@@ -34,8 +34,9 @@ const NewsRow = props => (
     </div>
 );
 
-const NewsList = props => {
+const NewsList = ({ setError }) => {
     const [news, setNews] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         (async () => {
@@ -57,10 +58,11 @@ const NewsList = props => {
 
                 setNews(newsItems);
             } catch (err) {
-                props.setError(processError(err));
+                setError(processError(err));
+                navigate("/error", { replace: true });
             }
         })();
-    }, []);
+    }, [navigate, setError]);
 
     // Organize the news in rows of three elements
     const organizeInRows = () => {
