@@ -41,6 +41,10 @@ app.use("/news", newsRouter);
 const authorRouter = require("./routes/authorRoutes");
 app.use("/author", authorRouter);
 
+// Router for authentication
+const authenticationRouter = require("./routes/authenticationRoutes");
+app.use("/session", authenticationRouter);
+
 // Router for the documentation
 const { router: docsRouter } = require("./modules/swagger");
 app.use("/api", docsRouter);

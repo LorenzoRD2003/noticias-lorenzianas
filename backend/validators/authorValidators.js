@@ -1,5 +1,5 @@
 const { body, param } = require('express-validator');
-const authorService = require("../services/authorService");
+const authenticationService = require("../services/authenticationService");
 
 const getAuthorValidator = [
     param("authorId")
@@ -20,7 +20,7 @@ const createAuthorValidator = [
         .withMessage("Email key must be an email.")
         .normalizeEmail()
         .custom(async email => {
-            const emailAlreadyAdded = await authorService.emailAlreadyAdded(email);
+            const emailAlreadyAdded = await authenticationService.emailAlreadyAdded(email);
             if (emailAlreadyAdded)
                 throw new Error("Email already in use.");
 
@@ -37,7 +37,7 @@ const createAuthorValidator = [
         .matches(/^[A-Za-z0-9\_]+$/)
         .withMessage("Username must be alphanumeric.")
         .custom(async username => {
-            const usernameAlreadyAdded = await authorService.usernameAlreadyAdded(username);
+            const usernameAlreadyAdded = await authenticationService.usernameAlreadyAdded(username);
             if (usernameAlreadyAdded)
                 throw new Error("Username already in use.");
         }),
@@ -78,28 +78,6 @@ const deleteAuthorValidator = [
         .withMessage("AuthorID is required.")
         .isMongoId()
         .withMessage("The required resource was not found.")
-];
-
-const loginValidator = [
-    // Username must have at least 8 characters
-    body("username")
-        .trim()
-        .exists()
-        .withMessage("Username is required.")
-        .isLength({ min: 8 })
-        .withMessage("Username must be at least 8 characters long.")
-        .matches(/^[A-Za-z0-9\_]+$/)
-        .withMessage("Username must be alphanumeric."),
-    
-    // Password must have at least 8 characters
-    body("password")
-        .trim()
-        .exists()
-        .withMessage("Password is required.")
-        .isLength({ min: 8 })
-        .withMessage("Password must be at least 8 chars long.")
-        .matches(/^[A-Za-z0-9\_]+$/)
-        .withMessage("Password must be alphanumeric.")
 ];
 
 module.exports = {

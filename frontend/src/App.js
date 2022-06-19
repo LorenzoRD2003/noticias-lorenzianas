@@ -3,7 +3,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
-import AuthorService from "./services/Author";
+import AuthService from "./services/Authentication";
 
 import Navbar from "./components/Navbar";
 import MainPage from "./components/MainPage";
@@ -22,7 +22,7 @@ function App() {
 
     useEffect(() => {
         const get = async () => {
-            const session = await AuthorService.session();
+            const session = await AuthService.session();
 
             if (Object.keys(session.data).length) {
                 setToken(session.data.token);

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import AuthorService from "../services/Author";
+import AuthService from "../services/Authentication";
 import { FormInput, FormButton, FormErrors } from "./Form";
 import processError from "../functions/processError";
 
@@ -30,7 +30,7 @@ const LoginForm = ({ setToken, setUser }) => {
         const { username, password } = data;
 
         try {
-            const result = (await AuthorService.login({ username, password })).data;
+            const result = (await AuthService.login({ username, password })).data;
             
             if (result.status === "FAILED")
                 throw new Error(result.data.error);

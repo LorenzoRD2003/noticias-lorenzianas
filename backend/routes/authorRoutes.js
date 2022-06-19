@@ -59,12 +59,6 @@ const router = express.Router();
  */
 router.get("/", authorController.getAllAuthors);
 
-router.get("/session", authorController.getSession);
-
-router.post("/login", authorValidators.loginValidator, authorController.login);
-
-router.get("/logout", authorController.logout);
-
 /**
  * @openapi
  * /author/{authorId}:
