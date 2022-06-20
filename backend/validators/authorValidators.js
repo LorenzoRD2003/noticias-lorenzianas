@@ -84,6 +84,5 @@ module.exports = {
     getAuthorValidator,
     createAuthorValidator,
     updateAuthorValidator,
-    deleteAuthorValidator,
-    loginValidator
+    deleteAuthorValidator
 }

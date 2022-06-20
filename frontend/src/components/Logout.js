@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router";
-import AuthService from "../services/Authentication";
 
 const Logout = ({ setToken, setUser }) => {
     const navigate = useNavigate();
@@ -10,7 +9,7 @@ const Logout = ({ setToken, setUser }) => {
             (async () => {
                 setToken(null);
                 setUser({});
-                await AuthService.logout();
+                localStorage.removeItem("session");
                 navigate("/", { replace: true });
             })();
         } catch (err) {

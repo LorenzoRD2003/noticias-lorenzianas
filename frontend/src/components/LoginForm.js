@@ -35,8 +35,10 @@ const LoginForm = ({ setToken, setUser }) => {
             if (result.status === "FAILED")
                 throw new Error(result.data.error);
 
-            setToken(result.data.token);
-            setUser(result.data.user);
+            setToken(result.data?.token);
+            setUser(result.data?.user);
+            localStorage.setItem("session", JSON.stringify(result.data));
+
             navigate(previousPage, { replace: true });
         } catch (err) {
             const processedError = processError(err);

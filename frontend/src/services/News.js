@@ -22,16 +22,28 @@ class NewsService {
         return nodeReq.get(`/news/${id}/author`);
     }
 
-    create(data) {
-        return nodeReq.post("/news", data);
+    create(data, token) {
+        return nodeReq.post("/news", data, {
+            headers: {
+                "Authorization": `Bearer ${token}`
+            }
+        });
     }
 
-    update(data) {
-        return nodeReq.put("/news", data);
+    update(data, token) {
+        return nodeReq.put("/news", data, {
+            headers: {
+                "Authorization": `Bearer ${token}`
+            }
+        });
     }
 
-    delete(id) {
-        return nodeReq.delete(`/news/${id}`);
+    delete(id, token) {
+        return nodeReq.delete(`/news/${id}`, {
+            headers: {
+                "Authorization": `Bearer ${token}`
+            }
+        });
     }
 }
 

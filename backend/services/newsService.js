@@ -21,7 +21,6 @@ const getNewsArticle = async id => {
 
 const createNewsArticle = async body => {
     body.author = mongoose.Types.ObjectId(body.author);
-    console.log(body);
     const createdNews = await News.create(body);
 
     const author = await Author.findById(body.author);

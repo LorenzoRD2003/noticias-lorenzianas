@@ -23,7 +23,10 @@ const login = async (username, password) => {
     
     if (result) {
         author.password = "";
-        return author;
+        return {
+            id: author._id,
+            username: author.username
+        };
     } else
         return { error: "La contraseña es incorrecta." }
 }

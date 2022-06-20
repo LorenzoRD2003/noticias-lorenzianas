@@ -27,7 +27,7 @@ const apiErrorHandler = (err, req, res, next) => {
     if (err instanceof ApiError)
         return res.status(err.code).send({status: "FAILED", data: { error: err.message } });
     else
-        return res.status(500).send({ status: "FAILED", data: { error: "Unknown error." } });
+        return res.status(500).send({ status: "FAILED", data: { error: err } });
 }
 
 const api404Handler = (req, res) => {

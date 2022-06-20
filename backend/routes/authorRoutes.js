@@ -1,5 +1,7 @@
 const express = require('express');
+const { authorization } = require("../modules/authorization");
 const authorController = require('../controllers/authorController');
+const authenticationController = require('../controllers/authenticationController');
 const authorValidators = require('../validators/authorValidators');
 
 const router = express.Router();
@@ -184,7 +186,7 @@ router.get("/:authorId", authorValidators.getAuthorValidator, authorController.g
  *                       type: string 
  *                       example: "An error occured in the server."
  */
-router.post("/", authorValidators.createAuthorValidator, authorController.createAuthor);
+router.post("/", authorValidators.createAuthorValidator, authorController.createAuthor, authenticationController.login);
 
 /**
  * @openapi
@@ -252,7 +254,7 @@ router.post("/", authorValidators.createAuthorValidator, authorController.create
  *                       type: string 
  *                       example: "An error occured in the server."
  */
-router.put("/:authorId", authorValidators.updateAuthorValidator, authorController.updateAuthorPassword);
+router.put("/:authorId", authorization, authorValidators.updateAuthorValidator, authorController.updateAuthorPassword);
 
 /**
  * @openapi
@@ -313,6 +315,6 @@ router.put("/:authorId", authorValidators.updateAuthorValidator, authorControlle
  *                       type: string 
  *                       example: "An error occured in the server."
  */
-router.delete("/:authorId", authorValidators.deleteAuthorValidator, authorController.deleteAuthor);
+router.delete("/:authorId", authorization, authorValidators.deleteAuthorValidator, authorController.deleteAuthor);
 
 module.exports = router;

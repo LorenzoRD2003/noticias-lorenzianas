@@ -14,9 +14,8 @@ app.use(bodyParser.json());
 
 // Use express-session module
 const session = require("express-session");
-const SESSION_SECRET = process.env.SESSION_SECRET;
 app.use(session({
-    secret: SESSION_SECRET,
+    secret: process.env.SECRET,
     resave: false,
     saveUninitialized: false,
     cookie: { maxAge: 15 * 60 * 1000 } // 15 minute
@@ -43,7 +42,7 @@ app.use("/author", authorRouter);
 
 // Router for authentication
 const authenticationRouter = require("./routes/authenticationRoutes");
-app.use("/session", authenticationRouter);
+app.use("/auth", authenticationRouter);
 
 // Router for the documentation
 const { router: docsRouter } = require("./modules/swagger");

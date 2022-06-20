@@ -65,7 +65,7 @@ const AuthorNewsList = props => {
     );
 }
 
-const AuthorConfig = props => {
+const AuthorConfig = ({ token, id }) => {
     const [showUpdatePassword, setShowUpdatePassword] = useState(false);
     const navigate = useNavigate();
 
@@ -80,7 +80,7 @@ const AuthorConfig = props => {
             return;
 
         try {
-            await AuthorService.delete(props.id);
+            await AuthorService.delete(id, token);
             navigate("/logout");
         } catch (err) {
             console.log(err);
@@ -104,14 +104,14 @@ const AuthorConfig = props => {
                 </div>
             </div>
             {showUpdatePassword ?
-                <UpdatePasswordForm id={props.id} /> :
+                <UpdatePasswordForm id={id} token={token} /> :
                 <></>
             }
         </div>
     );
 };
 
-const UpdatePasswordForm = props => {
+const UpdatePasswordForm = ({ token, id }) => {
     const [data, setData] = useState({ newPassword: "" });
     const [disabled, setDisabled] = useState(false);
     const [errors, setErrors] = useState([]);
@@ -129,10 +129,10 @@ const UpdatePasswordForm = props => {
         setDisabled(true);
 
         try {
-            const result = (await AuthorService.updatePassword(props.id, data)).data;
+            const result = (await AuthorService.updatePassword(id, data, token)).data;
 
             if (result.status === "FAILED")
-                throw new Error(result.data.error);
+                throw new Error(result.data?.error);
 
             navigate("/");
         } catch (err) {
@@ -156,7 +156,7 @@ const UpdatePasswordForm = props => {
     );
 }
 
-const AuthorPage = ({ user, setError }) => {
+const AuthorPage = ({ token, user, setError }) => {
     const { authorId } = useParams();
     const [data, setData] = useState({});
     const [update, setUpdate] = useState(0);
@@ -171,7 +171,7 @@ const AuthorPage = ({ user, setError }) => {
                     throw new Error(author.data.error);
 
                 setData({
-                    isLoggedIn: user._id === authorId,
+                    isLoggedIn: user.id === authorId,
                     ...author.data
                 });
             } catch (err) {
@@ -187,7 +187,7 @@ const AuthorPage = ({ user, setError }) => {
             if (!answer)
                 return;
 
-            await NewsService.delete(id);
+            await NewsService.delete(id, token);
             setUpdate(update => update + 1);
         } catch (err) {
             console.log(err);
@@ -204,7 +204,7 @@ const AuthorPage = ({ user, setError }) => {
             />
             <AuthorNewsList news={data.news} onDelete={deleteNews} isLoggedIn={data.isLoggedIn} />
             {data.isLoggedIn ?
-                <AuthorConfig id={authorId} /> :
+                <AuthorConfig token={token} id={authorId} /> :
                 <></>
             }
         </>

@@ -3,8 +3,6 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
-import AuthService from "./services/Authentication";
-
 import Navbar from "./components/Navbar";
 import MainPage from "./components/MainPage";
 import NewsArticle from "./components/NewsArticle";
@@ -22,11 +20,11 @@ function App() {
 
     useEffect(() => {
         const get = async () => {
-            const session = await AuthService.session();
+            const session = JSON.parse(localStorage.getItem("session"));
 
-            if (Object.keys(session.data).length) {
-                setToken(session.data.token);
-                setUser(session.data.user);
+            if (session) {
+                setToken(session.token);
+                setUser(session.user);
             }
         }
         if (!token) {
@@ -57,7 +55,7 @@ function App() {
                     />
                     <Route
                         path="/author/:authorId"
-                        element={<AuthorPage user={user} setError={setError} />}
+                        element={<AuthorPage token={token} user={user} setError={setError} />}
                     />
                     <Route
                         path="/login"
@@ -73,11 +71,17 @@ function App() {
                     />
                     <Route
                         path="/profile"
-                        element={<Navigate to={`/author/${user?._id}`} replace={true} />}
+                        element={token ?
+                            <Navigate to={`/author/${user?.id}`} replace={true} /> :
+                            <Navigate to="/login" />
+                        }
                     />
                     <Route
                         path="/publish"
-                        element={token ? <Publish user={user} /> : <Navigate to="/" replace={true} />}
+                        element={token ?
+                            <Publish token={token} user={user} /> :
+                            <Navigate to="/login" />
+                        }
                     />
                     <Route
                         path="/error"

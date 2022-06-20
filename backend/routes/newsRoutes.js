@@ -1,4 +1,5 @@
 const express = require('express');
+const { authorization } = require("../modules/authorization");
 const newsController = require('../controllers/newsController');
 const newsValidators = require('../validators/newsValidators');
 
@@ -211,7 +212,7 @@ router.get("/:newsId", newsValidators.getNewsArticleValidator, newsController.ge
  *                       type: string 
  *                       example: "An error occured in the server."
  */
-router.post("/", newsValidators.createNewsArticleValidator, newsController.createNewsArticle);
+router.post("/", authorization, newsValidators.createNewsArticleValidator, newsController.createNewsArticle);
 
 /**
  * @openapi
@@ -279,7 +280,7 @@ router.post("/", newsValidators.createNewsArticleValidator, newsController.creat
  *                       type: string 
  *                       example: "An error occured in the server."
  */
-router.put("/:newsId", newsValidators.updateNewsArticleValidator, newsController.updateNewsArticle);
+router.put("/:newsId", authorization, newsValidators.updateNewsArticleValidator, newsController.updateNewsArticle);
 
 /**
  * @openapi
@@ -340,7 +341,7 @@ router.put("/:newsId", newsValidators.updateNewsArticleValidator, newsController
  *                       type: string 
  *                       example: "An error occured in the server."
  */
-router.delete("/:newsId", newsValidators.deleteNewsArticleValidator, newsController.deleteNewsArticle);
+router.delete("/:newsId", authorization, newsValidators.deleteNewsArticleValidator, newsController.deleteNewsArticle);
 
 /**
  * @openapi

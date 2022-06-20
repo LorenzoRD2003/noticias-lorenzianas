@@ -9,16 +9,28 @@ class AuthorService {
         return nodeReq.get(`/author/${id}`);
     }
 
-    create(data) {
-        return nodeReq.post("/author", data);
+    create(data, token) {
+        return nodeReq.post("/author", data, {
+            headers: {
+                "Authorization": `Bearer ${token}`
+            }
+        });
     }
 
-    updatePassword(id, data) {
-        return nodeReq.put(`/author/${id}`, data);
+    updatePassword(id, data, token) {
+        return nodeReq.put(`/author/${id}`, data, {
+            headers: {
+                "Authorization": `Bearer ${token}`
+            }
+        });
     }
 
-    delete(id) {
-        return nodeReq.delete(`/author/${id}`);
+    delete(id, token) {
+        return nodeReq.delete(`/author/${id}`, {
+            headers: {
+                "Authorization": `Bearer ${token}`
+            }
+        });
     }
 }
 

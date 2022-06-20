@@ -1,4 +1,3 @@
-const { v4: uuidv4 } = require('uuid');
 const { ApiError } = require("../modules/error-handler");
 const { validationResult } = require("express-validator");
 const authorService = require("../services/authorService");
@@ -38,19 +37,9 @@ const createAuthor = async (req, res, next) => {
         if (!validationErrors.isEmpty())
             return next(ApiError.badRequestError(validationErrors.array()));
 
-        const createdAuthor = await authorService.createAuthor(req.body);
-
-        req.session.token = uuidv4();
-        req.session.user = createdAuthor;
-        req.session.save();
-
-        res.status(201).send({
-            status: "OK",
-            data: {
-                token: req.session.token,
-                user: req.session.user
-            }
-        });
+        await authorService.createAuthor(req.body);
+        
+        next();
     } catch (err) {
         next(ApiError.internalServerError(err.message));
     }

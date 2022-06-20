@@ -32,9 +32,9 @@ const NewsBody = props => {
     );
 }
 
-const Publish = props => {
+const Publish = ({ token, user }) => {
     const [data, setData] = useState({
-        author: props.user._id,
+        author: user._id,
         headline: "",
         lead: "",
         body: [],
@@ -103,7 +103,7 @@ const Publish = props => {
         setDisabled(true);
 
         try {
-            const result = (await NewsService.create(data)).data;
+            const result = (await NewsService.create(data, token)).data;
 
             if (result.status === "FAILED")
                 throw new Error(result.data.error);

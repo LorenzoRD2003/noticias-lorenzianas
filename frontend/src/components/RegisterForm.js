@@ -48,6 +48,8 @@ const RegisterForm = ({ setToken, setUser }) => {
 
             setToken(newAuthor.data.token);
             setUser(newAuthor.data.user);
+            localStorage.setItem("session", JSON.stringify(newAuthor.data));
+
             navigate(previousPage, { replace: true });
         } catch (err) {
             const processedError = processError(err);
