@@ -42,7 +42,7 @@ const createNewsArticle = async (req, res, next) => {
         if (!validationErrors.isEmpty())
             return next(ApiError.badRequestError(validationErrors.array()));
 
-        const createdNewsArticle = await newsService.createNewsArticle(req.body);
+        const createdNewsArticle = await newsService.createNewsArticle(req.body, res.locals.token);
         res.status(201).send({ status: "OK", data: createdNewsArticle });
     } catch (err) {
         next(ApiError.internalServerError(err.message));
@@ -55,7 +55,7 @@ const updateNewsArticle = async (req, res, next) => {
         if (!validationErrors.isEmpty())
             return next(ApiError.badRequestError(validationErrors.array()));
 
-        await newsService.updateNewsArticle(req.params.newsId, req.body);
+        await newsService.updateNewsArticle(req.params.newsId, req.body, res.locals.token);
         res.status(204).send({ status: "OK" });
     } catch (err) {
         next(ApiError.internalServerError(err.message));
@@ -68,7 +68,7 @@ const deleteNewsArticle = async (req, res, next) => {
         if (!validationErrors.isEmpty())
             return next(ApiError.badRequestError(validationErrors.array()));
 
-        await newsService.deleteNewsArticle(req.params.newsId);
+        await newsService.deleteNewsArticle(req.params.newsId, res.locals.token);
         res.status(204).send({ status: "OK" });
     } catch (err) {
         next(ApiError.internalServerError(err.message));

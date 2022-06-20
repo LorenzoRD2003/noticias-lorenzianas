@@ -9,11 +9,11 @@ const authorization = (req, res, next) => {
             null;
 
         if (!token)
-            next(ApiError.unauthorizedError("Token is missing."));
+            return next(ApiError.unauthorizedError("Token is missing."));
 
         const decodedToken = jwt.verify(token, process.env.SECRET);
         if (!decodedToken?.id)
-            next(ApiError.unauthorizedError("Token is invalid."));
+            return next(ApiError.unauthorizedError("Token is invalid."));
 
         res.locals.token = decodedToken;
         next();
@@ -21,7 +21,6 @@ const authorization = (req, res, next) => {
         next(ApiError.unauthorizedError(err?.message));
     }
 };
-
 
 module.exports = {
     authorization

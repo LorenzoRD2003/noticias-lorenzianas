@@ -17,18 +17,18 @@ const login = async (username, password) => {
         .select("+password");
 
     if (!author)
-        return { error: "El nombre de usuario ingresado no existe." }
+        return { error: "El nombre de usuario ingresado no existe." };
 
     const result = await bcrypt.compare(password, author.password);
-    
-    if (result) {
-        author.password = "";
-        return {
-            id: author._id,
-            username: author.username
-        };
-    } else
-        return { error: "La contraseña es incorrecta." }
+
+    if (!result)
+        return { error: "La contraseña es incorrecta." };
+
+    author.password = "";
+    return {
+        id: author._id,
+        username: author.username
+    };
 }
 
 module.exports = {

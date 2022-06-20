@@ -34,7 +34,7 @@ const NewsBody = props => {
 
 const Publish = ({ token, user }) => {
     const [data, setData] = useState({
-        author: user._id,
+        author: user.id,
         headline: "",
         lead: "",
         body: [],

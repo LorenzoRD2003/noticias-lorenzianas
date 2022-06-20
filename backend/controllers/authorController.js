@@ -38,7 +38,7 @@ const createAuthor = async (req, res, next) => {
             return next(ApiError.badRequestError(validationErrors.array()));
 
         await authorService.createAuthor(req.body);
-        
+
         next();
     } catch (err) {
         next(ApiError.internalServerError(err.message));
@@ -51,7 +51,7 @@ const updateAuthorPassword = async (req, res, next) => {
         if (!validationErrors.isEmpty())
             return next(ApiError.badRequestError(validationErrors.array()));
 
-        await authorService.updateAuthor(req.params.authorId, req.body.newPassword);
+        await authorService.updateAuthor(req.params.authorId, req.body.newPassword, res.locals.token);
         res.status(204).send({ status: "OK" });
     } catch (err) {
         next(ApiError.internalServerError(err.message));
@@ -64,7 +64,7 @@ const deleteAuthor = async (req, res, next) => {
         if (!validationErrors.isEmpty())
             return next(ApiError.badRequestError(validationErrors.array()));
 
-        await authorService.deleteAuthor(req.params.authorId);
+        await authorService.deleteAuthor(req.params.authorId, res.locals.token);
         res.status(204).send({ status: "OK" });
     } catch (err) {
         next(ApiError.internalServerError(err.message));

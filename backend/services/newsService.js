@@ -19,22 +19,33 @@ const getNewsArticle = async id => {
     return news;
 }
 
-const createNewsArticle = async body => {
+const createNewsArticle = async (body, token) => {
+    const author = await Author.findById(body.author);
+    if (!author._id?.toString() !== token.id)
+        return;
+    
     body.author = mongoose.Types.ObjectId(body.author);
     const createdNews = await News.create(body);
-
-    const author = await Author.findById(body.author);
+    
     author.news.push(createdNews);
     author.save();
 
     return createdNews;
 }
 
-const updateNewsArticle = async (id, body) => {
+const updateNewsArticle = async (id, body, token) => {
+    const news = await News.findById(id);
+    if (news.author?.toString() !== token.id)
+        return;
+
     await News.findByIdAndUpdate(id, body);
 }
 
-const deleteNewsArticle = async id => {
+const deleteNewsArticle = async (id, token) => {
+    const news = await News.findById(id);
+    if (news.author?.toString() !== token.id)
+        return;
+
     await News.findByIdAndDelete(id);
 }
 
