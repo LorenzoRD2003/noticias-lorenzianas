@@ -1,5 +1,5 @@
 const express = require('express');
-const { authorization } = require("../modules/authorization");
+const { authorization } = require("../modules/authentication");
 const newsController = require('../controllers/newsController');
 const newsValidators = require('../validators/newsValidators');
 

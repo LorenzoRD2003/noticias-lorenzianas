@@ -21,20 +21,23 @@ function App() {
     useEffect(() => {
         const get = async () => {
             const session = JSON.parse(localStorage.getItem("session"));
+            if (!session)
+                return;
 
-            if (session) {
-                setToken(session.token);
-                setUser(session.user);
-            }
+            const expDate = JSON.parse(window.atob(session.token?.split(".")[1]))?.exp;
+            if (!expDate || expDate * 1000 < Date.now())
+                return localStorage.removeItem("session");
+
+            setToken(session.token);
+            setUser(session.user);
         }
-        if (!token) {
-            try {
-                get();
-            } catch (err) {
-                console.log(err);
-            }
+
+        try {
+            get();
+        } catch (err) {
+            console.log(err);
         }
-    }, [token]);
+    }, []);
 
     return (
         <div className="container mb-3">

@@ -1,7 +1,6 @@
 const express = require('express');
-const { authorization } = require("../modules/authorization");
 const authorController = require('../controllers/authorController');
-const authenticationController = require('../controllers/authenticationController');
+const { login, authorization } = require('../modules/authentication');
 const authorValidators = require('../validators/authorValidators');
 
 const router = express.Router();
@@ -186,7 +185,7 @@ router.get("/:authorId", authorValidators.getAuthorValidator, authorController.g
  *                       type: string 
  *                       example: "An error occured in the server."
  */
-router.post("/", authorValidators.createAuthorValidator, authorController.createAuthor, authenticationController.login);
+router.post("/", authorValidators.createAuthorValidator, authorController.createAuthor, login);
 
 /**
  * @openapi

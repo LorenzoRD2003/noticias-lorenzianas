@@ -12,15 +12,6 @@ const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-// Use express-session module
-const session = require("express-session");
-app.use(session({
-    secret: process.env.SECRET,
-    resave: false,
-    saveUninitialized: false,
-    cookie: { maxAge: 15 * 60 * 1000 } // 15 minute
-}));
-
 // Connect to the database
 require("./database/mongoose");
 

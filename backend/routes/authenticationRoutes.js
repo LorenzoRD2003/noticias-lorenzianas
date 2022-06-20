@@ -1,9 +1,11 @@
 const express = require('express');
-const authenticationController = require('../controllers/authenticationController');
+const { login, getNewToken } = require('../modules/authentication');
 const authenticationValidators = require('../validators/authenticationValidators');
 
 const router = express.Router();
 
-router.post("/login", authenticationValidators.loginValidator, authenticationController.login);
+router.post("/login", authenticationValidators.loginValidator, login, getNewToken);
+
+router.put("/refresh", getNewToken);
 
 module.exports = router;
